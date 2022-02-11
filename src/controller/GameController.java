@@ -1,7 +1,7 @@
 /**
  * 
  */
-package Controller;
+package controller;
 
 /**
  * @author Lasse
