@@ -1,0 +1,2 @@
+# fastfingers
+Train your fingers
