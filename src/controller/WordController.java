@@ -34,16 +34,22 @@ public class WordController {
 		}*/
 	}
 	
-	public String findWord(String text) {
-		String word = findWord(text);
+	public Word findWord(String text) {
+		Word word = findWord(text);
 		return word;
 	}
 	
-	public void addWord(String w) {
+	public void addWord(Word w) {
 		wordContainer.addWord(w);
+	}
+	
+	private void printWords() {
+		wordContainer.printWords();
 	}
 	
 	private void init() {
 		config = new Config();
+		config.printText("Init word controller called");
+		printWords();
 	}
 }

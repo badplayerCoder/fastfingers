@@ -12,11 +12,14 @@ import java.awt.event.MouseEvent;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import controller.WordController;
+import addon.Config;
 
 public class WordGUI extends JFrame {
 
 	private JPanel contentPane;
 	private WindowManager windowManager;
+	private Config config;
+	
 	private JTextField wordField;
 	private WordController wordController;
 
@@ -46,6 +49,7 @@ public class WordGUI extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		setLocationRelativeTo(null);
 		
 		JButton btnBack = new JButton("Back");
 		btnBack.addMouseListener(new MouseAdapter() {
@@ -71,9 +75,7 @@ public class WordGUI extends JFrame {
 		btnAdd.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				//System.out.println(wordController.findWord(wordField.getText()));
 				String s = wordField.getText();
-				System.out.println(s);
 				wordController.newWord(s);
 			}
 		});
@@ -84,6 +86,8 @@ public class WordGUI extends JFrame {
 	}
 	
 	private void init() {
+		config = new Config();
+		config.printText("Init word gui called");
 		windowManager = new WindowManager();
 		wordController = new WordController();
 	}
