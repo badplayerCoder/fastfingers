@@ -4,6 +4,8 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Random;
+
 import addon.Config;
 
 /**
@@ -47,11 +49,12 @@ public class WordContainer {
 	
 	//	Creates new word & adds it to arraylist
 	public void newWord(String text) {
-		if(findWord(text).getWord() == text) {
-			config.printText("The entered word is already added");
-		}else {
+		if(findWord(text) == null) {
 			Word word = new Word(text);
 			addWord(word);
+			config.printText(word.getWord() + " Has been added");
+		}else {
+			config.printText("The entered word is already added");
 		}
 		
 	}
@@ -63,14 +66,36 @@ public class WordContainer {
 		for(Word s : words) {
 			config.printText("findWord for each loop");
 			config.printWord(s);
-			if(s.getWord() == text) {
+			if(s.getWord().equals(text)) {
 				word = s;
+				config.printWord(word);
 				break;
 			}
 		}
 		
 		return word;
 	}
+	
+	public Word randomWord() {
+		//	Create instance of Random class
+		Random random = new Random();
+		
+		//	Create new word & set it to null
+		Word word = null;
+		
+		//	Randomize index for the size of words arraylist
+		int index = random.nextInt(words.size());
+		
+		//	Sets word from words arraylist with the randomized index
+		word = words.get(index);
+		
+		//	Returns the random word
+		return word;
+	}
+	
+	/*
+	 * 	Prints all words of this container
+	 */
 	
 	public void printWords() {
 		//Prints all words into console

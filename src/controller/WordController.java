@@ -16,6 +16,10 @@ public class WordController {
 	private WordContainer wordContainer;
 	private Config config;
 	
+	/*
+	 * 	Constructor & it is created when the class is called  
+	 */
+	
 	public WordController() {
 		wordContainer = WordContainer.getInstance();
 		init();
@@ -25,27 +29,48 @@ public class WordController {
 	public void newWord(String text) {
 		//	Checks if the word is already added
 		wordContainer.newWord(text);
-		config.printText(text + " has been added ");
-		/*if(findWord(text) == null) {
-			wordContainer.newWord(text);
-			config.printText(text + " has been added ");
-		}else {
-			config.printText("The entered word is already added");
-		}*/
 	}
+	
+	/*
+	 *	Finds & returns word with given text	
+	 */
 	
 	public Word findWord(String text) {
 		Word word = findWord(text);
 		return word;
 	}
 	
+	/*
+	 * 	Returns random word from list	
+	 */
+	
+	public Word randomWord() {
+		Word word = null;
+		
+		word = wordContainer.randomWord();
+		
+		return word;
+	}
+	
+	/*
+	 * 	Adds word to wordContainer 
+	 */
+	
 	public void addWord(Word w) {
 		wordContainer.addWord(w);
 	}
 	
+	/*
+	 * 	Calls methods from wordcontainer to print all words
+	 */
+	
 	private void printWords() {
 		wordContainer.printWords();
 	}
+	
+	/*
+	 * 	Init 
+	 */
 	
 	private void init() {
 		config = new Config();

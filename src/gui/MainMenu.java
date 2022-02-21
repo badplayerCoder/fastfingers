@@ -57,6 +57,13 @@ public class MainMenu extends JFrame {
 		contentPane.add(btnWord);
 		
 		JButton btnGame = new JButton("Game Menu");
+		btnGame.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				windowManager.goGameMenu();
+				setVisible(false);
+			}
+		});
 		btnGame.setBounds(416, 210, 120, 100);
 		contentPane.add(btnGame);
 		
