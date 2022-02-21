@@ -1,19 +1,27 @@
 package gui;
 
+import java.awt.AWTException;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Robot;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Document;
 
+import addon.Config;
 import controller.GameController;
 
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JButton;
+
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.KeyAdapter;
 
 public class GameGUI extends JFrame {
 
@@ -22,9 +30,12 @@ public class GameGUI extends JFrame {
 	private JLabel lblFirst;
 	private JLabel lblSecond;
 	
+	private Robot robot;
+	
 	
 	private WindowManager windowManager;
 	private GameController gameController;
+	private Config config;
 	
 
 	/**
@@ -55,6 +66,28 @@ public class GameGUI extends JFrame {
 		contentPane.setLayout(null);
 		
 		textField = new JTextField();
+		textField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_SPACE) {
+					
+					if(gameController.checkTextBox(textField.getText())) {
+						
+						textField.setText(null);
+						robot.keyPress(KeyEvent.VK_BACK_SPACE);
+						robot.keyRelease(KeyEvent.VK_BACK_SPACE);
+					    
+						updateLabel();
+						//textField.setText(null);
+						//String text = textField.getText().trim().strip();
+						//textField.setText(text);
+						
+						
+					}
+					config.printText("space bar is pressed");
+				}
+			}
+		});
 		textField.setBounds(275, 283, 218, 23);
 		contentPane.add(textField);
 		textField.setColumns(10);
@@ -89,8 +122,27 @@ public class GameGUI extends JFrame {
 	}
 	
 	private void init() {
+		try {
+			robot = new Robot();
+		} catch (AWTException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		windowManager = new WindowManager();
 		gameController = new GameController();
-		//gameController.setLabelFirst();
+		config = new Config();
+		
+		setup();
 	}
+	
+	private void updateLabel() {
+		lblFirst.setText(gameController.getFirst());
+		lblSecond.setText(gameController.getSecond());
+	}
+	
+	private void setup() {
+		lblFirst.setText(gameController.setLabelFirst());
+		lblSecond.setText(gameController.setLabelSecond());
+	}
+	
 }
