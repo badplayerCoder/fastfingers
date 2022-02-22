@@ -11,7 +11,7 @@ import model.Word;
  */
 public class Config {
 
-	public final boolean testing = true;
+	public final boolean testing = false;
 	
 	//	Prints text into console as string
 	public void printText(String text) {

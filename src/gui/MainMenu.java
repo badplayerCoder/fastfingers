@@ -93,6 +93,8 @@ public class MainMenu extends JFrame {
 						//	Uses robot to backspace in textfield to start at the beginning everytime
 						robot.keyPress(KeyEvent.VK_BACK_SPACE);
 						robot.keyRelease(KeyEvent.VK_BACK_SPACE);
+						
+						lblLang.setText(stext + " has been activated");
 					}
 				}
 			}
