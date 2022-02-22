@@ -16,13 +16,13 @@ public class Tester {
 	
 	public Tester() {
 		init();
+		Setup();
+	}
+	
+	public void Setup() {
 		WordController wc = new WordController();
-		Word s1 = new Word("hey");
-		Word s2 = new Word("hej");
-		wc.addWord(s1);
-		wc.addWord(s2);
-		config.printWord(s1);
-		config.printWord(s2);
+		wc.newWord("hey");
+		wc.newWord("hej");
 	}
 	
 	public void testWord() {

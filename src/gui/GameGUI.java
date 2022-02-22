@@ -75,23 +75,28 @@ public class GameGUI extends JFrame {
 					if(gameController.checkTextBox(textField.getText())) {
 						
 						textField.setText(null);
+						
 						robot.keyPress(KeyEvent.VK_BACK_SPACE);
 						robot.keyRelease(KeyEvent.VK_BACK_SPACE);
 					    
 						updateLabel();
 						scoreSetup();
-						//textField.setText(null);
-						//String text = textField.getText().trim().strip();
-						//textField.setText(text);
 						
 						
 					}else {
+						textField.setText(null);
 						
+						robot.keyPress(KeyEvent.VK_BACK_SPACE);
+						robot.keyRelease(KeyEvent.VK_BACK_SPACE);
+						
+						updateLabel();
+						scoreSetup();
 					}
 					config.printText("space bar is pressed");
 				}
 			}
 		});
+		
 		textField.setBounds(275, 283, 218, 23);
 		contentPane.add(textField);
 		textField.setColumns(10);
@@ -145,17 +150,22 @@ public class GameGUI extends JFrame {
 	}
 	
 	private void updateLabel() {
-		lblFirst.setText(gameController.getFirst());
-		lblSecond.setText(gameController.getSecond());
+		String text = "<html>" + gameController.getFirst() + " " + gameController.getSecond();
+		lblFirst.setText(text);
+		//lblFirst.setText(gameController.getFirst());
+		//lblSecond.setText(gameController.getSecond());
 	}
 	
 	private void setup() {
-		lblFirst.setText(gameController.setLabelFirst());
-		lblSecond.setText(gameController.setLabelSecond());
+		String text = "<html>" + gameController.setLabelFirst() + " " + gameController.setLabelSecond();
+		lblFirst.setText(text);
+		//lblSecond.setText(gameController.setLabelSecond());
+		lblSecond.setText(null);
 	}
 	
 	private void scoreSetup() {
-		String text = "<html>Correct: " + gameController.getCorrect() + "<br>Wrong: " + gameController.getWrong() + "<br>Accuracy: " + gameController.getProcent() + "%";
+		String procent = Double.toString(Math.floor(gameController.getProcent()));
+		String text = "<html>Correct: " + gameController.getCorrect() + "<br>Wrong: " + gameController.getWrong() + "<br>Accuracy: " + procent + "%";
 		
 		lblScore.setText(text);
 	}

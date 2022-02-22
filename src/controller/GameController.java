@@ -97,7 +97,7 @@ public class GameController {
 		return score.getWrong();
 	}
 	
-	public int getProcent() {
+	public double getProcent() {
 		return score.getProcent();
 	}
 	

@@ -9,6 +9,13 @@ package addon;
  */
 public class Score {
 	
+	/*
+	 * 	Addons
+	 */
+	
+	private Config config;
+	
+	
 	//	Variables
 	private int correct;
 	private int wrong;
@@ -20,6 +27,7 @@ public class Score {
 	public Score() {
 		this.correct = 0;
 		this.wrong = 0;
+		config = new Config();
 	}
 	
 	/*
@@ -50,12 +58,15 @@ public class Score {
 	 * 	Methods
 	 */
 	
-	public int getProcent() {
-		int procent = 0;
-		if(correct == 0 && wrong == 0) {
+	public double getProcent() {
+		double procent = 0;
+		double totalAnswers = getCorrect() + getWrong();
+		double correctph = getCorrect();
+		if(totalAnswers == 0) {
 			//Nothing
 		}else {
-			procent = (correct / (correct + wrong)) * 100;
+			procent = (correctph / totalAnswers);
+			procent *= 100;
 		}
 		
 		return procent; 
