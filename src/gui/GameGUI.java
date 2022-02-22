@@ -59,7 +59,7 @@ public class GameGUI extends JFrame {
 	 */
 	public GameGUI() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 800, 600);
+		setBounds(100, 100, 700, 400);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -71,43 +71,18 @@ public class GameGUI extends JFrame {
 			public void keyPressed(KeyEvent e) {
 				if(e.getKeyCode() == KeyEvent.VK_SPACE) {
 					
-					if(gameController.checkTextBox(textField.getText())) {
-						
-						//	Clears textfield
-						textField.setText(null);
-						
-						//	Uses robot to backspace in textfield to start at the beginning everytime
-						robot.keyPress(KeyEvent.VK_BACK_SPACE);
-						robot.keyRelease(KeyEvent.VK_BACK_SPACE);
-					    
-						//	Updates labels & score
-						updateLabel();
-						scoreSetup();
-						
-						
-					}else {
-						//	Clears textfield
-						textField.setText(null);
-						
-						//	Uses robot to backspace in textfield to start at the beginning everytime
-						robot.keyPress(KeyEvent.VK_BACK_SPACE);
-						robot.keyRelease(KeyEvent.VK_BACK_SPACE);
-						
-						//	Updates labels & score
-						updateLabel();
-						scoreSetup();
-					}
+					gameTextFieldLogic();
 					config.printText("space bar is pressed");
 				}
 			}
 		});
 		
-		textField.setBounds(275, 283, 218, 23);
+		textField.setBounds(226, 216, 218, 32);
 		contentPane.add(textField);
 		textField.setColumns(10);
 		
 		lblFirst = new JLabel("Placeholder first");
-		lblFirst.setBounds(275, 251, 218, 23);
+		lblFirst.setBounds(236, 188, 218, 23);
 		contentPane.add(lblFirst);
 		
 		JButton btnBack = new JButton("Back");
@@ -147,6 +122,39 @@ public class GameGUI extends JFrame {
 		
 		setup();
 		scoreSetup();
+	}
+	
+	/*
+	 * 	Method to hold game logic with the textfield
+	 */
+	
+	private void gameTextFieldLogic() {
+		if(gameController.checkTextBox(textField.getText())) {
+			
+			//	Clears textfield
+			textField.setText(null);
+			
+			//	Uses robot to backspace in textfield to start at the beginning everytime
+			robot.keyPress(KeyEvent.VK_BACK_SPACE);
+			robot.keyRelease(KeyEvent.VK_BACK_SPACE);
+		    
+			//	Updates labels & score
+			updateLabel();
+			scoreSetup();
+			
+			
+		}else {
+			//	Clears textfield
+			textField.setText(null);
+			
+			//	Uses robot to backspace in textfield to start at the beginning everytime
+			robot.keyPress(KeyEvent.VK_BACK_SPACE);
+			robot.keyRelease(KeyEvent.VK_BACK_SPACE);
+			
+			//	Updates labels & score
+			updateLabel();
+			scoreSetup();
+		}
 	}
 	
 	/*

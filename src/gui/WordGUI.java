@@ -1,7 +1,9 @@
 package gui;
 
+import java.awt.AWTException;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Robot;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -13,15 +15,21 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import controller.WordController;
 import addon.Config;
+import javax.swing.SwingConstants;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class WordGUI extends JFrame {
 
 	private JPanel contentPane;
 	private WindowManager windowManager;
 	private Config config;
+	private Robot robot;
 	
 	private JTextField wordField;
+	private JLabel lblFeedback;
 	private WordController wordController;
+	private JLabel lblDisclaimer;
 
 	/**
 	 * Launch the application.
@@ -44,7 +52,7 @@ public class WordGUI extends JFrame {
 	 */
 	public WordGUI() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 800, 600);
+		setBounds(100, 100, 700, 400);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -63,11 +71,20 @@ public class WordGUI extends JFrame {
 		contentPane.add(btnBack);
 		
 		JLabel lblInfo = new JLabel("Enter here, the word you want to add");
-		lblInfo.setBounds(275, 251, 218, 23);
+		lblInfo.setBounds(229, 120, 272, 23);
 		contentPane.add(lblInfo);
 		
 		wordField = new JTextField();
-		wordField.setBounds(275, 283, 218, 23);
+		wordField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+					addNewWord();
+					clearTextField();
+				}
+			}
+		});
+		wordField.setBounds(239, 155, 218, 23);
 		contentPane.add(wordField);
 		wordField.setColumns(10);
 		
@@ -75,20 +92,63 @@ public class WordGUI extends JFrame {
 		btnAdd.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				String s = wordField.getText();
-				wordController.newWord(s);
+				addNewWord();
 			}
 		});
-		btnAdd.setBounds(322, 317, 116, 23);
+		btnAdd.setBounds(291, 190, 116, 23);
 		contentPane.add(btnAdd);
+		
+		lblFeedback = new JLabel("");
+		lblFeedback.setHorizontalAlignment(SwingConstants.CENTER);
+		lblFeedback.setHorizontalTextPosition(SwingConstants.CENTER);
+		lblFeedback.setBounds(234, 225, 218, 23);
+		contentPane.add(lblFeedback);
+		
+		lblDisclaimer = new JLabel("<html>Disclaimer: when adding words manually with this. The words are only temporarily in the system while the program is opened, when program is closed the added words will be removed again!");
+		lblDisclaimer.setBounds(10, 322, 684, 44);
+		contentPane.add(lblDisclaimer);
 		
 		init();
 	}
+	
+	/*
+	 * 	Goes through wordController to check & add new word given in wordField. This is being used by the button & wordField ENTER key
+	 */
+	
+	private void addNewWord() {
+		String s = wordField.getText();
+		wordController.newWord(s);
+		
+		lblFeedback.setText("The word " + s.toUpperCase() + " has been added");
+	}
+	
+	/*
+	 * 	Clear the wordField when using keyboard to add words by pressing ENTER key
+	 */
+	
+	private void clearTextField() {
+//		Clears textfield
+		wordField.setText(null);
+		
+		//	Uses robot to backspace in textfield to start at the beginning everytime
+		robot.keyPress(KeyEvent.VK_BACK_SPACE);
+		robot.keyRelease(KeyEvent.VK_BACK_SPACE);
+	}
+	
+	/*
+	 * 	Does all the startup things to make it all work
+	 */
 	
 	private void init() {
 		config = new Config();
 		config.printText("Init word gui called");
 		windowManager = new WindowManager();
 		wordController = new WordController();
+		try {
+			robot = new Robot();
+		} catch (AWTException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

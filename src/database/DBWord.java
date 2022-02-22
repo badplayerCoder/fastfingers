@@ -18,7 +18,7 @@ public class DBWord {
 	 */
 	
 	public String pickLang(String text) {
-		String s = null;
+		String s = "";
 		dropDB();
 		switch(text) {
 			case "danish":
@@ -29,7 +29,16 @@ public class DBWord {
 				s = "english";
 				dbEnglishSetup();
 				break;
+			case "help":
+				s = "help";
+				dbDanishSetup();
+				break;
+			case "info":
+				s = "info";
+				dbDanishSetup();
+				break;
 		}
+		
 		return s;
 	}
 	

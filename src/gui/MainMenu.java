@@ -11,6 +11,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.format.DateTimeFormatter;
+
+import addon.Config;
 import addon.Tester;
 import database.DBWord;
 import javax.swing.JTextField;
@@ -24,9 +27,11 @@ public class MainMenu extends JFrame {
 	private WindowManager windowManager;
 	private DBWord dbWord;
 	private Robot robot;
+	private Config config;
 	
 	private JTextField textField;
 	private JLabel lblLang;
+	private JLabel lblDisclaim;
 
 	/**
 	 * Launch the application.
@@ -49,7 +54,7 @@ public class MainMenu extends JFrame {
 	 */
 	public MainMenu() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 800, 600);
+		setBounds(100, 100, 700, 400);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -64,7 +69,7 @@ public class MainMenu extends JFrame {
 				setVisible(false);
 			}
 		});
-		btnWord.setBounds(212, 210, 120, 100);
+		btnWord.setBounds(170, 150, 120, 100);
 		contentPane.add(btnWord);
 		
 		JButton btnGame = new JButton("Game Menu");
@@ -75,7 +80,7 @@ public class MainMenu extends JFrame {
 				setVisible(false);
 			}
 		});
-		btnGame.setBounds(416, 210, 120, 100);
+		btnGame.setBounds(410, 150, 120, 100);
 		contentPane.add(btnGame);
 		
 		textField = new JTextField();
@@ -84,42 +89,76 @@ public class MainMenu extends JFrame {
 			public void keyPressed(KeyEvent e) {
 				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
 					
-					String stext = textField.getText();
+					textFieldLogic();
 					
-					if(dbWord.pickLang(stext).equals(stext)) {
-						//	Clears textfield
-						textField.setText(null);
-						
-						//	Uses robot to backspace in textfield to start at the beginning everytime
-						robot.keyPress(KeyEvent.VK_BACK_SPACE);
-						robot.keyRelease(KeyEvent.VK_BACK_SPACE);
-						
-						lblLang.setText(stext + " has been activated");
-					}
 				}
 			}
 		});
-		textField.setBounds(307, 46, 146, 31);
+		textField.setBounds(278, 66, 146, 31);
 		contentPane.add(textField);
 		textField.setColumns(10);
 		
 		lblLang = new JLabel("Supported lang: danish & english");
-		lblLang.setBounds(268, 19, 228, 23);
+		lblLang.setBounds(239, 41, 228, 23);
 		contentPane.add(lblLang);
+		
+		lblDisclaim = new JLabel("Made by Lasse Haslund");
+		lblDisclaim.setBounds(6, 350, 418, 16);
+		contentPane.add(lblDisclaim);
 		
 		init();
 	}
 	
+	private void textFieldLogic() {
+		String stext = textField.getText();
+		
+		if(dbWord.pickLang(stext).equals(stext)) {
+			if(dbWord.pickLang(stext).equals("help") || dbWord.pickLang(stext).equals("info")) {
+				
+				//	Clears textfield
+				textField.setText(null);
+				
+				//	Uses robot to backspace in textfield to start at the beginning everytime
+				robot.keyPress(KeyEvent.VK_BACK_SPACE);
+				robot.keyRelease(KeyEvent.VK_BACK_SPACE);
+				
+				lblLang.setText("Supported lang: danish & english");
+				
+			}else {
+				//	Clears textfield
+				textField.setText(null);
+				
+				//	Uses robot to backspace in textfield to start at the beginning everytime
+				robot.keyPress(KeyEvent.VK_BACK_SPACE);
+				robot.keyRelease(KeyEvent.VK_BACK_SPACE);
+				
+				lblLang.setText(stext + " has been activated");
+			}
+		}else{
+			
+			lblLang.setText(stext + " is not supported");
+			
+		}
+	}
 	
 	//	Init on startup
 	private void init() {
 		windowManager = new WindowManager();
 		dbWord = new DBWord();
+		config = new Config();
 		try {
 			robot = new Robot();
 		} catch (AWTException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		addDisclaim();
+	}
+	
+	private void addDisclaim() {
+		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");  
+        String formatDateTime = config.now.format(format);  
+		String ph = "Made by " + config.author + " - Version: " + config.version + " - " + formatDateTime;
+		lblDisclaim.setText(ph);
 	}
 }

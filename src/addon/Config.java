@@ -3,6 +3,8 @@
  */
 package addon;
 
+import java.time.LocalDateTime;
+
 import model.Word;
 
 /**
@@ -12,6 +14,9 @@ import model.Word;
 public class Config {
 
 	public final boolean testing = false;
+	public final String author = "Lasse Haslund";
+	public final String version = "1.1";
+	public final LocalDateTime now = LocalDateTime.now();  
 	
 	//	Prints text into console as string
 	public void printText(String text) {
