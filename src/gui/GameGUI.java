@@ -29,6 +29,7 @@ public class GameGUI extends JFrame {
 	private JTextField textField;
 	private JLabel lblFirst;
 	private JLabel lblSecond;
+	private JLabel lblScore;
 	
 	private Robot robot;
 	
@@ -78,10 +79,13 @@ public class GameGUI extends JFrame {
 						robot.keyRelease(KeyEvent.VK_BACK_SPACE);
 					    
 						updateLabel();
+						scoreSetup();
 						//textField.setText(null);
 						//String text = textField.getText().trim().strip();
 						//textField.setText(text);
 						
+						
+					}else {
 						
 					}
 					config.printText("space bar is pressed");
@@ -110,6 +114,10 @@ public class GameGUI extends JFrame {
 		});
 		btnBack.setBounds(10, 11, 75, 23);
 		contentPane.add(btnBack);
+		
+		lblScore = new JLabel("Placeholder Score");
+		lblScore.setBounds(509, 18, 241, 67);
+		contentPane.add(lblScore);
 		setLocationRelativeTo(null);
 		
 		init();
@@ -133,6 +141,7 @@ public class GameGUI extends JFrame {
 		config = new Config();
 		
 		setup();
+		scoreSetup();
 	}
 	
 	private void updateLabel() {
@@ -145,4 +154,9 @@ public class GameGUI extends JFrame {
 		lblSecond.setText(gameController.setLabelSecond());
 	}
 	
+	private void scoreSetup() {
+		String text = "<html>Correct: " + gameController.getCorrect() + "<br>Wrong: " + gameController.getWrong() + "<br>Accuracy: " + gameController.getProcent() + "%";
+		
+		lblScore.setText(text);
+	}
 }

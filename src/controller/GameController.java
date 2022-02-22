@@ -5,6 +5,7 @@ package controller;
 
 import javax.swing.JLabel;
 
+import addon.Score;
 import gui.GameGUI;
 import model.Word;
 
@@ -15,6 +16,7 @@ import model.Word;
 public class GameController {
 
 	private WordController wordController;
+	private Score score;
 	
 	private String lblFirst;
 	private String lblSecond;
@@ -45,9 +47,11 @@ public class GameController {
 		boolean check = false;
 		if(text.equals(lblFirst.toString())) {
 			moveSecondToFirst();
+			score.addCorrect();
 			check = true;
+		}else {
+			score.addWrong();
 		}
-		
 		return check;
 	}
 	
@@ -59,6 +63,11 @@ public class GameController {
 		}
 	}
 	
+	
+	/*
+	 * 	Getters
+	 */
+	
 	public String getFirst() {
 		return lblFirst;
 	}
@@ -67,8 +76,29 @@ public class GameController {
 		return lblSecond;
 	}
 	
+	/*
+	 * 	Init
+	 */
+	
 	private void init() {
 		wordController = new WordController();
+		score = new Score();
+	}
+	
+	/*
+	 * 	Score
+	 */
+	
+	public int getCorrect() {
+		return score.getCorrect();
+	}
+	
+	public int getWrong() {
+		return score.getWrong();
+	}
+	
+	public int getProcent() {
+		return score.getProcent();
 	}
 	
 }
