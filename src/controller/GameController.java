@@ -71,6 +71,7 @@ public class GameController {
 			score.addCorrect();
 			check = true;
 		}else {
+			moveTextToNewRow();
 			score.addWrong();
 		}
 		return check;
