@@ -3,7 +3,7 @@ Train your fingers
 
 Clone this repos to a folder on desktop
 
-Open the cloned repos in eclipse
+Open the clone repos in eclipse
 
 Run Main Menu in gui-package to run the program
 
