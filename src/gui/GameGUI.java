@@ -28,7 +28,6 @@ public class GameGUI extends JFrame {
 	private JPanel contentPane;
 	private JTextField textField;
 	private JLabel lblFirst;
-	private JLabel lblSecond;
 	private JLabel lblScore;
 	
 	private Robot robot;
@@ -74,21 +73,27 @@ public class GameGUI extends JFrame {
 					
 					if(gameController.checkTextBox(textField.getText())) {
 						
+						//	Clears textfield
 						textField.setText(null);
 						
+						//	Uses robot to backspace in textfield to start at the beginning everytime
 						robot.keyPress(KeyEvent.VK_BACK_SPACE);
 						robot.keyRelease(KeyEvent.VK_BACK_SPACE);
 					    
+						//	Updates labels & score
 						updateLabel();
 						scoreSetup();
 						
 						
 					}else {
+						//	Clears textfield
 						textField.setText(null);
 						
+						//	Uses robot to backspace in textfield to start at the beginning everytime
 						robot.keyPress(KeyEvent.VK_BACK_SPACE);
 						robot.keyRelease(KeyEvent.VK_BACK_SPACE);
 						
+						//	Updates labels & score
 						updateLabel();
 						scoreSetup();
 					}
@@ -104,10 +109,6 @@ public class GameGUI extends JFrame {
 		lblFirst = new JLabel("Placeholder first");
 		lblFirst.setBounds(275, 251, 218, 23);
 		contentPane.add(lblFirst);
-		
-		lblSecond = new JLabel("Placeholder second");
-		lblSecond.setBounds(490, 251, 197, 23);
-		contentPane.add(lblSecond);
 		
 		JButton btnBack = new JButton("Back");
 		btnBack.addMouseListener(new MouseAdapter() {
@@ -125,14 +126,13 @@ public class GameGUI extends JFrame {
 		contentPane.add(lblScore);
 		setLocationRelativeTo(null);
 		
+		//Init method
 		init();
 	}
 	
-	
-	
-	public void setFirst(String lbl) {
-		lblFirst.setText(lbl);
-	}
+	/*
+	 * 	Init controllers & managers in the class at startup
+	 */
 	
 	private void init() {
 		try {
@@ -149,19 +149,27 @@ public class GameGUI extends JFrame {
 		scoreSetup();
 	}
 	
+	/*
+	 * 	Updates words & what place the words are in the label
+	 */
+	
 	private void updateLabel() {
-		String text = "<html>" + gameController.getFirst() + " " + gameController.getSecond();
+		String text = "<html>" + gameController.getFirst() + " " + gameController.getSecond() + " " + gameController.getThird();
 		lblFirst.setText(text);
-		//lblFirst.setText(gameController.getFirst());
-		//lblSecond.setText(gameController.getSecond());
 	}
 	
+	/*
+	 * 	Setups at startup words in the label place
+	 */
+	
 	private void setup() {
-		String text = "<html>" + gameController.setLabelFirst() + " " + gameController.setLabelSecond();
+		String text = "<html>" + gameController.setLabelFirst() + " " + gameController.setLabelSecond() + " " + gameController.setLabelThird();
 		lblFirst.setText(text);
-		//lblSecond.setText(gameController.setLabelSecond());
-		lblSecond.setText(null);
 	}
+	
+	/*
+	 * 	Setups score at startup & also being used to update score 
+	 */
 	
 	private void scoreSetup() {
 		String procent = Double.toString(Math.floor(gameController.getProcent()));

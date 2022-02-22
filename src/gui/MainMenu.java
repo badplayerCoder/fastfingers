@@ -1,7 +1,9 @@
 package gui;
 
+import java.awt.AWTException;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Robot;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -10,12 +12,21 @@ import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import addon.Tester;
+import database.DBWord;
+import javax.swing.JTextField;
+import javax.swing.JLabel;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class MainMenu extends JFrame {
 
 	private JPanel contentPane;
 	private WindowManager windowManager;
-	private Tester tester;
+	private DBWord dbWord;
+	private Robot robot;
+	
+	private JTextField textField;
+	private JLabel lblLang;
 
 	/**
 	 * Launch the application.
@@ -67,18 +78,46 @@ public class MainMenu extends JFrame {
 		btnGame.setBounds(416, 210, 120, 100);
 		contentPane.add(btnGame);
 		
+		textField = new JTextField();
+		textField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+					
+					String stext = textField.getText();
+					
+					if(dbWord.pickLang(stext).equals(stext)) {
+						//	Clears textfield
+						textField.setText(null);
+						
+						//	Uses robot to backspace in textfield to start at the beginning everytime
+						robot.keyPress(KeyEvent.VK_BACK_SPACE);
+						robot.keyRelease(KeyEvent.VK_BACK_SPACE);
+					}
+				}
+			}
+		});
+		textField.setBounds(307, 46, 146, 31);
+		contentPane.add(textField);
+		textField.setColumns(10);
+		
+		lblLang = new JLabel("Supported lang: danish & english");
+		lblLang.setBounds(268, 19, 228, 23);
+		contentPane.add(lblLang);
+		
 		init();
-		runTest();
 	}
 	
 	
 	//	Init on startup
 	private void init() {
 		windowManager = new WindowManager();
+		dbWord = new DBWord();
+		try {
+			robot = new Robot();
+		} catch (AWTException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
-	
-	private void runTest() {
-		tester = new Tester();
-	}
-	
 }

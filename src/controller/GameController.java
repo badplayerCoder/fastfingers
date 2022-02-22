@@ -5,6 +5,7 @@ package controller;
 
 import javax.swing.JLabel;
 
+import addon.Config;
 import addon.Score;
 import gui.GameGUI;
 import model.Word;
@@ -17,13 +18,19 @@ public class GameController {
 
 	private WordController wordController;
 	private Score score;
+	private Config config;
 	
 	private String lblFirst;
 	private String lblSecond;
+	private String lblThird;
 	
 	public GameController() {
 		init();
 	}
+	
+	/*
+	 * 	Methods to randomize lblFirst, lblSecond & lblThird when being called
+	 */
 	
 	public String setLabelFirst() {
 		Word word = null;
@@ -43,10 +50,24 @@ public class GameController {
 		return lblSecond;
 	}
 	
+	public String setLabelThird() {
+		Word word = null;
+		word = wordController.randomWord();
+		
+		this.lblThird = word.getWord();
+		
+		return lblThird;
+	}
+	
+	/*
+	 * 	The logic for textField at gameGUI to check if the input is the same as lblFirst
+	 * 	@Returns true if textfield's input as lblFirst
+	 */
+	
 	public boolean checkTextBox(String text) {
 		boolean check = false;
 		if(text.equals(lblFirst.toString())) {
-			moveSecondToFirst();
+			moveTextToNewRow();
 			score.addCorrect();
 			check = true;
 		}else {
@@ -55,11 +76,16 @@ public class GameController {
 		return check;
 	}
 	
-	public void moveSecondToFirst() {
+	/*
+	 * 	Method to move labels in the row from last to first
+	 */
+	
+	public void moveTextToNewRow() {
 		lblFirst = lblSecond; //Moves second word to first
-		lblSecond = null; //Clears lbl second
-		if(lblSecond == null) {
-			lblSecond = setLabelSecond();
+		lblSecond = lblThird; //Clears lbl second
+		lblThird = null;
+		if(lblThird == null) {
+			lblThird = setLabelThird();
 		}
 	}
 	
@@ -76,6 +102,10 @@ public class GameController {
 		return lblSecond;
 	}
 	
+	public String getThird() {
+		return lblThird;
+	}
+	
 	/*
 	 * 	Init
 	 */
@@ -83,6 +113,7 @@ public class GameController {
 	private void init() {
 		wordController = new WordController();
 		score = new Score();
+		config = new Config();
 	}
 	
 	/*

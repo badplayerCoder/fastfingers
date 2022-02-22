@@ -76,6 +76,16 @@ public class WordContainer {
 		return word;
 	}
 	
+	/*
+	 * 	Drops all words in the arrayList to make room to new words
+	 * 	Use with care! It will clear the whole arraylist
+	 */
+	
+	public void dropDB() {
+		words.clear();
+		config.printText("Word database has been cleared and now is empty");
+	}
+	
 	public Word randomWord() {
 		//	Create instance of Random class
 		Random random = new Random();

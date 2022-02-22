@@ -69,6 +69,14 @@ public class WordController {
 	}
 	
 	/*
+	 * 	Drops all words in the container to make room for new words
+	 */
+	
+	public void dropDB() {
+		wordContainer.dropDB();
+	}
+	
+	/*
 	 * 	Init 
 	 */
 	
