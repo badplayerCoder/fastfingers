@@ -117,6 +117,61 @@ public class DBWord {
 		wc.newWord("par");
 		wc.newWord("danske");
 		wc.newWord("fra");
+		wc.newWord("mange");
+		wc.newWord("sin");
+		wc.newWord("gamle");
+		wc.newWord("København");
+		wc.newWord("stor");
+		wc.newWord("sine");
+		wc.newWord("alt");
+		wc.newWord("som");
+		wc.newWord("disse");
+		wc.newWord("ligger");
+		wc.newWord("måtte");
+		wc.newWord("unge");
+		wc.newWord("store");
+		wc.newWord("mener");
+		wc.newWord("gang");
+		wc.newWord("mest");
+		wc.newWord("kommer");
+		wc.newWord("kunne");
+		wc.newWord("hvordan");
+		wc.newWord("ny");
+		wc.newWord("blandt");
+		wc.newWord("mennesker");
+		wc.newWord("omkring");
+		wc.newWord("netop");
+		wc.newWord("meget");
+		wc.newWord("to");
+		wc.newWord("end");
+		wc.newWord("stadig");
+		wc.newWord("ville");
+		wc.newWord("sidste");
+		wc.newWord("andet");
+		wc.newWord("og");
+		wc.newWord("sit");
+		wc.newWord("også");
+		wc.newWord("have");
+		wc.newWord("del");
+		wc.newWord("om");
+		wc.newWord("nogle");
+		wc.newWord("nogen");
+		wc.newWord("mand");
+		wc.newWord("helt");
+		wc.newWord("tror");
+		wc.newWord("nok");
+		wc.newWord("sig");
+		wc.newWord("tale");
+		wc.newWord("dansk");
+		wc.newWord("da");
+		wc.newWord("dette");
+		wc.newWord("både");
+		wc.newWord("stige");
+		wc.newWord("stiger");
+		wc.newWord("hund");
+		wc.newWord("kat");
+		wc.newWord("hval");
+		wc.newWord("min");
 	}
 	
 	
@@ -237,6 +292,16 @@ public class DBWord {
 		wc.newWord("us");
 		wc.newWord("spell");
 		wc.newWord("form");
+		wc.newWord("long");
+		wc.newWord("right");
+		wc.newWord("those");
+		wc.newWord("example");
+		wc.newWord("run");
+		wc.newWord("does");
+		wc.newWord("any");
+		wc.newWord("much");
+		wc.newWord("high");
+		wc.newWord("night");
 	}
 	
 	private void init() {
