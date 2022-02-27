@@ -23,13 +23,14 @@ public class GameController {
 	private String lblFirst;
 	private String lblSecond;
 	private String lblThird;
+	private String lblFourth;
 	
 	public GameController() {
 		init();
 	}
 	
 	/*
-	 * 	Methods to randomize lblFirst, lblSecond & lblThird when being called
+	 * 	Methods to randomize lblFirst, lblSecond, lblThird & lblFourth when being called
 	 */
 	
 	public String setLabelFirst() {
@@ -59,6 +60,14 @@ public class GameController {
 		return lblThird;
 	}
 	
+	public String setLabelFourth() {
+		Word word = null;
+		word = wordController.randomWord();
+		
+		this.lblFourth = word.getWord();
+		
+		return lblFourth;
+	}
 	/*
 	 * 	The logic for textField at gameGUI to check if the input is the same as lblFirst
 	 * 	@Returns true if textfield's input as lblFirst
@@ -83,11 +92,13 @@ public class GameController {
 	
 	public void moveTextToNewRow() {
 		lblFirst = lblSecond; //Moves second word to first
-		lblSecond = lblThird; //Clears lbl second
-		lblThird = null;
-		if(lblThird == null) {
-			lblThird = setLabelThird();
+		lblSecond = lblThird; //Moves third to second
+		lblThird = lblFourth; //Moves fourth to third
+		lblFourth = null; //Clears fourth
+		if(lblFourth == null) {
+			lblFourth = setLabelFourth(); //Sets new word for lblfourth
 		}
+		config.printInt(wordController.getAmountWords());
 	}
 	
 	
@@ -107,6 +118,10 @@ public class GameController {
 		return lblThird;
 	}
 	
+	public String getFourth() {
+		return lblFourth;
+	}
+	
 	/*
 	 * 	Init
 	 */
@@ -118,7 +133,7 @@ public class GameController {
 	}
 	
 	/*
-	 * 	Score
+	 * 	Getters of Score
 	 */
 	
 	public int getCorrect() {

@@ -15,19 +15,23 @@ import java.time.format.DateTimeFormatter;
 
 import addon.Config;
 import addon.Tester;
+import controller.WordController;
 import database.DBWord;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import javax.swing.SwingConstants;
 
 public class MainMenu extends JFrame {
 
 	private JPanel contentPane;
+	
 	private WindowManager windowManager;
 	private DBWord dbWord;
 	private Robot robot;
 	private Config config;
+	private WordController wordController;
 	
 	private JTextField textField;
 	private JLabel lblLang;
@@ -76,8 +80,12 @@ public class MainMenu extends JFrame {
 		btnGame.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				windowManager.goGameMenu();
-				setVisible(false);
+				if(wordController.getAmountWords() == 0) {
+					windowManager.goMainMenuDialog();
+				}else {
+					windowManager.goGameMenu();
+					setVisible(false);
+				}
 			}
 		});
 		btnGame.setBounds(410, 150, 120, 100);
@@ -99,7 +107,9 @@ public class MainMenu extends JFrame {
 		textField.setColumns(10);
 		
 		lblLang = new JLabel("Supported lang: danish & english");
-		lblLang.setBounds(239, 41, 228, 23);
+		lblLang.setHorizontalAlignment(SwingConstants.CENTER);
+		lblLang.setHorizontalTextPosition(SwingConstants.CENTER);
+		lblLang.setBounds(170, 41, 360, 23);
 		contentPane.add(lblLang);
 		
 		lblDisclaim = new JLabel("Made by Lasse Haslund");
@@ -132,7 +142,7 @@ public class MainMenu extends JFrame {
 				robot.keyPress(KeyEvent.VK_BACK_SPACE);
 				robot.keyRelease(KeyEvent.VK_BACK_SPACE);
 				
-				lblLang.setText(stext + " has been activated");
+				lblLang.setText(stext + " has been activated with " + wordController.getAmountWords() + " different words");
 			}
 		}else{
 			
@@ -144,6 +154,7 @@ public class MainMenu extends JFrame {
 	//	Init on startup
 	private void init() {
 		windowManager = new WindowManager();
+		wordController = new WordController();
 		dbWord = new DBWord();
 		config = new Config();
 		try {

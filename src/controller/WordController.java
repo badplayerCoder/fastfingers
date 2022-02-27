@@ -69,6 +69,14 @@ public class WordController {
 	}
 	
 	/*
+	 * 	Returns the amount of words in the database atm as int
+	 */
+	
+	public int getAmountWords() {
+		return wordContainer.getAmountWords();
+	}
+	
+	/*
 	 * 	Drops all words in the container to make room for new words
 	 */
 	

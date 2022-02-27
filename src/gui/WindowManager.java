@@ -5,6 +5,8 @@ package gui;
 
 import javax.swing.JFrame;
 
+import dialog.MainMenuDialog;
+
 /**
  * @author Lasse
  *
@@ -40,6 +42,12 @@ public class WindowManager {
 		GameGUI gg = new GameGUI();
 		gg.setLocationRelativeTo(null);
 		gg.setVisible(true);
+	}
+	
+	public void goMainMenuDialog() {
+		MainMenuDialog mmd = new MainMenuDialog();
+		mmd.setLocationRelativeTo(null);
+		mmd.setVisible(true);
 	}
 	
 }

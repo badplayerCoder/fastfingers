@@ -15,7 +15,7 @@ public class Config {
 
 	public final boolean testing = false;
 	public final String author = "Lasse Haslund";
-	public final String version = "1.1";
+	public final String version = "1.2";
 	public final LocalDateTime now = LocalDateTime.now();  
 	
 	//	Prints text into console as string

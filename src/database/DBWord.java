@@ -10,7 +10,7 @@ public class DBWord {
 	
 	public DBWord() {
 		init();
-		dbDanishSetup();
+		//pickLang("danish"); // Commented out to make selv adding words to work again
 	}
 	
 	/*

@@ -162,7 +162,7 @@ public class GameGUI extends JFrame {
 	 */
 	
 	private void updateLabel() {
-		String text = "<html>" + gameController.getFirst() + " " + gameController.getSecond() + " " + gameController.getThird();
+		String text = "<html>" + gameController.getFirst() + " " + gameController.getSecond() + " " + gameController.getThird() + " " + gameController.getFourth();
 		lblFirst.setText(text);
 	}
 	
@@ -171,7 +171,7 @@ public class GameGUI extends JFrame {
 	 */
 	
 	private void setup() {
-		String text = "<html>" + gameController.setLabelFirst() + " " + gameController.setLabelSecond() + " " + gameController.setLabelThird();
+		String text = "<html>" + gameController.setLabelFirst() + " " + gameController.setLabelSecond() + " " + gameController.setLabelThird() + " " + gameController.setLabelFourth();
 		lblFirst.setText(text);
 	}
 	

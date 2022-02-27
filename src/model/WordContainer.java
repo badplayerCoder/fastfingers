@@ -113,4 +113,15 @@ public class WordContainer {
 			config.printWord(w);
 		}
 	}
+	
+	public int getAmountWords() {
+		//Returns the count of words
+		int sum = 0;
+		//Foreach loop to + sum up
+		for(Word w : words) {
+			sum++;
+		}
+		//Returns the sum
+		return sum; 
+	}
 }

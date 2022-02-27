@@ -101,7 +101,7 @@ public class WordGUI extends JFrame {
 		lblFeedback = new JLabel("");
 		lblFeedback.setHorizontalAlignment(SwingConstants.CENTER);
 		lblFeedback.setHorizontalTextPosition(SwingConstants.CENTER);
-		lblFeedback.setBounds(234, 225, 218, 23);
+		lblFeedback.setBounds(95, 225, 515, 23);
 		contentPane.add(lblFeedback);
 		
 		lblDisclaimer = new JLabel("<html>Disclaimer: when adding words manually with this. The words are only temporarily in the system while the program is opened, when program is closed the added words will be removed again!");
