@@ -21,7 +21,11 @@ import javax.swing.JButton;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.event.KeyAdapter;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class GameGUI extends JFrame {
 
@@ -31,7 +35,6 @@ public class GameGUI extends JFrame {
 	private JLabel lblScore;
 	
 	private Robot robot;
-	
 	
 	private WindowManager windowManager;
 	private GameController gameController;
@@ -81,8 +84,15 @@ public class GameGUI extends JFrame {
 		contentPane.add(textField);
 		textField.setColumns(10);
 		
+		//	This is to set focus for textField when GameGUI is opened
+		addWindowListener(new WindowAdapter() {
+		     public void windowOpened(WindowEvent e) {
+		    	 textField.requestFocus();
+		     }
+		});
+		
 		lblFirst = new JLabel("Placeholder first");
-		lblFirst.setBounds(236, 188, 218, 23);
+		lblFirst.setBounds(230, 188, 220, 30);
 		contentPane.add(lblFirst);
 		
 		JButton btnBack = new JButton("Back");

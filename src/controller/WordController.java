@@ -26,9 +26,12 @@ public class WordController {
 	}
 	
 	//	Creates new word & adds it to arraylist from the wordContainer
-	public void newWord(String text) {
-		//	Checks if the word is already added
-		wordContainer.newWord(text);
+	public boolean newWord(String text) {
+		boolean success = false;
+		if(wordContainer.newWord(text)) {
+			success = true;
+		}
+		return success;
 	}
 	
 	/*

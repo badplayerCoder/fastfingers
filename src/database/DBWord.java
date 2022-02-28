@@ -51,7 +51,12 @@ public class DBWord {
 	}
 	
 	/*
-	 * 	DB lang setup 
+	 * 	DB language setup
+	 * 
+	 *	To add new words to the setup do it like this:
+	 *	wc.newWord("The word you want to add");
+	 *	this method checks if the word is already in the system
+	 *	if not, it will add the new word to the system
 	 */
 	
 	private void dbDanishSetup() {

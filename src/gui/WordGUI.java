@@ -11,6 +11,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import controller.WordController;
@@ -88,6 +91,13 @@ public class WordGUI extends JFrame {
 		contentPane.add(wordField);
 		wordField.setColumns(10);
 		
+		//This is to set focus for wordField when WordGUI is opened
+		addWindowListener(new WindowAdapter() {
+		     public void windowOpened(WindowEvent e) {
+		    	 wordField.requestFocus();
+		     }
+		});
+		
 		JButton btnAdd = new JButton("Add word");
 		btnAdd.addMouseListener(new MouseAdapter() {
 			@Override
@@ -117,9 +127,11 @@ public class WordGUI extends JFrame {
 	
 	private void addNewWord() {
 		String s = wordField.getText();
-		wordController.newWord(s);
-		
-		lblFeedback.setText("The word " + s.toUpperCase() + " has been added");
+		if(wordController.newWord(s)) {
+			lblFeedback.setText("The word " + s.toUpperCase() + " has been added");
+		}else {
+			lblFeedback.setText("The word " + s.toUpperCase() + " is already added");
+		}
 	}
 	
 	/*

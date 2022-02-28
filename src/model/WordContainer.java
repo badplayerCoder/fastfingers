@@ -48,15 +48,18 @@ public class WordContainer {
 	}
 	
 	//	Creates new word & adds it to arraylist
-	public void newWord(String text) {
+	public boolean newWord(String text) {
+		boolean success = false;
 		if(findWord(text) == null) {
 			Word word = new Word(text);
 			addWord(word);
+			success = true;
 			config.printText(word.getWord() + " Has been added");
 		}else {
 			config.printText("The entered word is already added");
 		}
 		
+		return success;
 	}
 	
 	//	Search for word by input text

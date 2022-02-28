@@ -106,7 +106,7 @@ public class MainMenu extends JFrame {
 		contentPane.add(textField);
 		textField.setColumns(10);
 		
-		lblLang = new JLabel("Supported lang: danish & english");
+		lblLang = new JLabel("Supported language: danish & english");
 		lblLang.setHorizontalAlignment(SwingConstants.CENTER);
 		lblLang.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblLang.setBounds(170, 41, 360, 23);
@@ -132,7 +132,7 @@ public class MainMenu extends JFrame {
 				robot.keyPress(KeyEvent.VK_BACK_SPACE);
 				robot.keyRelease(KeyEvent.VK_BACK_SPACE);
 				
-				lblLang.setText("Supported lang: danish & english");
+				lblLang.setText("Supported language: danish & english");
 				
 			}else {
 				//	Clears textfield
