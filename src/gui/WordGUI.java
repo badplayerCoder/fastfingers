@@ -18,6 +18,8 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import controller.WordController;
 import addon.Config;
+import addon.WriteToFile;
+
 import javax.swing.SwingConstants;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -33,6 +35,8 @@ public class WordGUI extends JFrame {
 	private JLabel lblFeedback;
 	private WordController wordController;
 	private JLabel lblDisclaimer;
+	
+	private WriteToFile writeFile;
 
 	/**
 	 * Launch the application.
@@ -66,6 +70,7 @@ public class WordGUI extends JFrame {
 		btnBack.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
+				writeFile.onClosed("Exiting Word GUI");
 				windowManager.goMainMenu();
 				setVisible(false);
 			}
@@ -81,7 +86,7 @@ public class WordGUI extends JFrame {
 		wordField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+				if(e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_SPACE) {
 					addNewWord();
 					clearTextField();
 				}
@@ -103,6 +108,7 @@ public class WordGUI extends JFrame {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				addNewWord();
+				clearTextField();
 			}
 		});
 		btnAdd.setBounds(291, 190, 116, 23);
@@ -128,6 +134,7 @@ public class WordGUI extends JFrame {
 	private void addNewWord() {
 		String s = wordField.getText();
 		if(wordController.newWord(s)) {
+			writeFile.writeWordToFile(s + " has been added");
 			lblFeedback.setText("The word " + s.toUpperCase() + " has been added");
 		}else {
 			lblFeedback.setText("The word " + s.toUpperCase() + " is already added");
@@ -162,5 +169,8 @@ public class WordGUI extends JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		writeFile = new WriteToFile();
+		
+		writeFile.onOpen("Word GUI started");
 	}
 }

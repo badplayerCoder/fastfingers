@@ -14,7 +14,9 @@ import java.awt.event.MouseEvent;
 import java.time.format.DateTimeFormatter;
 
 import addon.Config;
+import addon.CreateFile;
 import addon.Tester;
+import addon.WriteToFile;
 import controller.WordController;
 import database.DBWord;
 import javax.swing.JTextField;
@@ -36,6 +38,9 @@ public class MainMenu extends JFrame {
 	private JTextField textField;
 	private JLabel lblLang;
 	private JLabel lblDisclaim;
+	
+	private CreateFile createFile;
+	private WriteToFile writeFile;
 
 	/**
 	 * Launch the application.
@@ -69,6 +74,7 @@ public class MainMenu extends JFrame {
 		btnWord.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
+				writeFile.onClosed("Exiting main menu");
 				windowManager.goWordMenu();
 				setVisible(false);
 			}
@@ -83,6 +89,7 @@ public class MainMenu extends JFrame {
 				if(wordController.getAmountWords() == 0) {
 					windowManager.goMainMenuDialog();
 				}else {
+					writeFile.onClosed("Exiting main menu");
 					windowManager.goGameMenu();
 					setVisible(false);
 				}
@@ -157,19 +164,25 @@ public class MainMenu extends JFrame {
 		wordController = new WordController();
 		dbWord = new DBWord();
 		config = new Config();
+		createFile = new CreateFile();
+		writeFile = new WriteToFile();
 		try {
 			robot = new Robot();
+			createFile.createLogFile();
 		} catch (AWTException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		addDisclaim();
+		writeFile.onOpen("Main menu started");
+		writeFile.onOpen(addDisclaim());
 	}
 	
-	private void addDisclaim() {
+	private String addDisclaim() {
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");  
         String formatDateTime = config.now.format(format);  
 		String ph = "Made by " + config.author + " - Version: " + config.version + " - " + formatDateTime;
 		lblDisclaim.setText(ph);
+		return formatDateTime;
 	}
 }

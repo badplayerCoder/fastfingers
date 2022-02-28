@@ -76,11 +76,9 @@ public class GameController {
 	public boolean checkTextBox(String text) {
 		boolean check = false;
 		if(text.equals(lblFirst.toString())) {
-			moveTextToNewRow();
 			score.addCorrect();
 			check = true;
 		}else {
-			moveTextToNewRow();
 			score.addWrong();
 		}
 		return check;

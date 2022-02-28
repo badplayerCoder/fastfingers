@@ -12,6 +12,8 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 
 import addon.Config;
+import addon.CreateFile;
+import addon.WriteToFile;
 import controller.GameController;
 
 import javax.swing.JTextField;
@@ -39,6 +41,8 @@ public class GameGUI extends JFrame {
 	private WindowManager windowManager;
 	private GameController gameController;
 	private Config config;
+	private WriteToFile writeFile;
+	private CreateFile createFile;
 	
 
 	/**
@@ -99,6 +103,7 @@ public class GameGUI extends JFrame {
 		btnBack.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
+				writeFile.onClosed("Exiting Game GUI");
 				windowManager.goMainMenu();
 				setVisible(false);
 			}
@@ -129,6 +134,12 @@ public class GameGUI extends JFrame {
 		windowManager = new WindowManager();
 		gameController = new GameController();
 		config = new Config();
+		writeFile = new WriteToFile();
+		createFile = new CreateFile();
+		
+		createFile.createWrongWordFile();
+		
+		writeFile.onOpen("Game GUI started");
 		
 		setup();
 		scoreSetup();
@@ -140,6 +151,8 @@ public class GameGUI extends JFrame {
 	
 	private void gameTextFieldLogic() {
 		if(gameController.checkTextBox(textField.getText())) {
+			//	Moves words to new row
+			gameController.moveTextToNewRow();
 			
 			//	Clears textfield
 			textField.setText(null);
@@ -154,6 +167,13 @@ public class GameGUI extends JFrame {
 			
 			
 		}else {
+			String text = textField.getText();
+			String right = gameController.getFirst();
+			writeFile.writeWrongWordToFile(right,text);
+			
+			//	Moves words to new row
+			gameController.moveTextToNewRow();
+			
 			//	Clears textfield
 			textField.setText(null);
 			

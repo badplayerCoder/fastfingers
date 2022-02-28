@@ -3,6 +3,7 @@
  */
 package addon;
 
+import java.io.File;
 import java.time.LocalDateTime;
 
 import model.Word;
@@ -13,22 +14,26 @@ import model.Word;
  */
 public class Config {
 
-	public final boolean testing = false;
+	public final boolean testing = true;
 	public final String author = "Lasse Haslund";
-	public final String version = "1.2";
+	public final String version = "1.3";
 	public final LocalDateTime now = LocalDateTime.now();  
+	
+	//private WriteToFile writeFile = new WriteToFile();
 	
 	//	Prints text into console as string
 	public void printText(String text) {
 		if(testing) {
+			//writeFile.write
 			System.out.println(text);
 		}
 	}
 	
 	//	Prints text into console as integer
-	public void printInt(int text) {
+	public void printInt(int amount) {
 		if(testing) {
-			System.out.print(text);
+			//writeFile.writeIntegerToFile(amount);
+			System.out.print(amount);
 		}
 	}
 	
@@ -36,6 +41,13 @@ public class Config {
 	public void printWord(Word w) {
 		if(testing) {
 			System.out.println(w.getWord());
+		}
+	}
+	
+	//	Prints String & file into console
+	public void printFile(String text, File file) {
+		if(testing) {
+			System.out.println(text + file);
 		}
 	}
 	
