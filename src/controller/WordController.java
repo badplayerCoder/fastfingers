@@ -44,6 +44,14 @@ public class WordController {
 	}
 	
 	/*
+	 * 	Removes word with given parameter
+	 */
+	
+	public void removeWord(String text) {
+		wordContainer.removeWord(text);
+	}
+	
+	/*
 	 * 	Returns random word from list	
 	 */
 	

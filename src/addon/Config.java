@@ -14,9 +14,9 @@ import model.Word;
  */
 public class Config {
 
-	public final boolean testing = true;
+	public final boolean testing = false;
 	public final String author = "Lasse Haslund";
-	public final String version = "1.3";
+	public final String version = "1.4";
 	public final LocalDateTime now = LocalDateTime.now();  
 	
 	//private WriteToFile writeFile = new WriteToFile();

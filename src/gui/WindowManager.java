@@ -5,6 +5,7 @@ package gui;
 
 import javax.swing.JFrame;
 
+import dialog.ExistDialog;
 import dialog.MainMenuDialog;
 
 /**
@@ -48,6 +49,12 @@ public class WindowManager {
 		MainMenuDialog mmd = new MainMenuDialog();
 		mmd.setLocationRelativeTo(null);
 		mmd.setVisible(true);
+	}
+	
+	public void goExistDialog(String text) {
+		ExistDialog ed = new ExistDialog(text);
+		ed.setLocationRelativeTo(null);
+		ed.setVisible(true);
 	}
 	
 }

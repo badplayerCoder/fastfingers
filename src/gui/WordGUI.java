@@ -1,7 +1,6 @@
 package gui;
 
 import java.awt.AWTException;
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Robot;
 
@@ -35,6 +34,7 @@ public class WordGUI extends JFrame {
 	private JLabel lblFeedback;
 	private WordController wordController;
 	private JLabel lblDisclaimer;
+	private JLabel lblInfo;
 	
 	private WriteToFile writeFile;
 
@@ -78,7 +78,7 @@ public class WordGUI extends JFrame {
 		btnBack.setBounds(10, 11, 75, 23);
 		contentPane.add(btnBack);
 		
-		JLabel lblInfo = new JLabel("Enter here, the word you want to add");
+		lblInfo = new JLabel("Enter here, the word you want to add or remove");
 		lblInfo.setBounds(229, 120, 272, 23);
 		contentPane.add(lblInfo);
 		
@@ -137,7 +137,8 @@ public class WordGUI extends JFrame {
 			writeFile.writeWordToFile(s + " has been added");
 			lblFeedback.setText("The word " + s.toUpperCase() + " has been added");
 		}else {
-			lblFeedback.setText("The word " + s.toUpperCase() + " is already added");
+			windowManager.goExistDialog(s);
+			//lblFeedback.setText("The word " + s.toUpperCase() + " is already added");
 		}
 	}
 	

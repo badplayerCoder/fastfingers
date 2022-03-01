@@ -8,6 +8,10 @@ public class DBWord {
 	private WordController wc; //Normally it is wordController, but for faster coding words in database, it will be wc
 	private Config cfg; //Same as above
 	
+	//	Language classes
+	private Danish danish;
+	private English english;
+	
 	public DBWord() {
 		init();
 		//pickLang("danish"); // Commented out to make selv adding words to work again
@@ -23,19 +27,19 @@ public class DBWord {
 		switch(text) {
 			case "danish":
 				s = "danish";
-				dbDanishSetup();
+				danish.danishSetup();
 				break;
 			case "english":
 				s = "english";
-				dbEnglishSetup();
+				english.englishSetup();
 				break;
 			case "help":
 				s = "help";
-				dbDanishSetup();
+				danish.danishSetup();
 				break;
 			case "info":
 				s = "info";
-				dbDanishSetup();
+				danish.danishSetup();
 				break;
 		}
 		
@@ -50,268 +54,11 @@ public class DBWord {
 		wc.dropDB();
 	}
 	
-	/*
-	 * 	DB language setup
-	 * 
-	 *	To add new words to the setup do it like this:
-	 *	wc.newWord("The word you want to add");
-	 *	this method checks if the word is already in the system
-	 *	if not, it will add the new word to the system
-	 */
-	
-	private void dbDanishSetup() {
-		wc.newWord("skole");
-		wc.newWord("blevet");
-		wc.newWord("langt");
-		wc.newWord("derfor");
-		wc.newWord("man");
-		wc.newWord("lille");
-		wc.newWord("går");
-		wc.newWord("tre");
-		wc.newWord("hvis");
-		wc.newWord("til");
-		wc.newWord("os");
-		wc.newWord("mod");
-		wc.newWord("få");
-		wc.newWord("her");
-		wc.newWord("over");
-		wc.newWord("verden");
-		wc.newWord("Danmark");
-		wc.newWord("gennem");
-		wc.newWord("skulle");
-		wc.newWord("andre");
-		wc.newWord("af");
-		wc.newWord("før");
-		wc.newWord("han");
-		wc.newWord("sagde");
-		wc.newWord("god");
-		wc.newWord("nye");
-		wc.newWord("igen");
-		wc.newWord("blev");
-		wc.newWord("jo");
-		wc.newWord("børn");
-		wc.newWord("hele");
-		wc.newWord("frem");
-		wc.newWord("sådan");
-		wc.newWord("tidligere");
-		wc.newWord("eller");
-		wc.newWord("da");
-		wc.newWord("folk");
-		wc.newWord("flere");
-		wc.newWord("endnu");
-		wc.newWord("første");
-		wc.newWord("altid");
-		wc.newWord("fået");
-		wc.newWord("vores");
-		wc.newWord("side");
-		wc.newWord("var");
-		wc.newWord("med");
-		wc.newWord("se");
-		wc.newWord("mindre");
-		wc.newWord("år");
-		wc.newWord("tage");
-		wc.newWord("sammen");
-		wc.newWord("lige");
-		wc.newWord("arbejde");
-		wc.newWord("gik");
-		wc.newWord("allerede");
-		wc.newWord("hende");
-		wc.newWord("være");
-		wc.newWord("tilbage");
-		wc.newWord("fire");
-		wc.newWord("par");
-		wc.newWord("danske");
-		wc.newWord("fra");
-		wc.newWord("mange");
-		wc.newWord("sin");
-		wc.newWord("gamle");
-		wc.newWord("København");
-		wc.newWord("stor");
-		wc.newWord("sine");
-		wc.newWord("alt");
-		wc.newWord("som");
-		wc.newWord("disse");
-		wc.newWord("ligger");
-		wc.newWord("måtte");
-		wc.newWord("unge");
-		wc.newWord("store");
-		wc.newWord("mener");
-		wc.newWord("gang");
-		wc.newWord("mest");
-		wc.newWord("kommer");
-		wc.newWord("kunne");
-		wc.newWord("hvordan");
-		wc.newWord("ny");
-		wc.newWord("blandt");
-		wc.newWord("mennesker");
-		wc.newWord("omkring");
-		wc.newWord("netop");
-		wc.newWord("meget");
-		wc.newWord("to");
-		wc.newWord("end");
-		wc.newWord("stadig");
-		wc.newWord("ville");
-		wc.newWord("sidste");
-		wc.newWord("andet");
-		wc.newWord("og");
-		wc.newWord("sit");
-		wc.newWord("også");
-		wc.newWord("have");
-		wc.newWord("del");
-		wc.newWord("om");
-		wc.newWord("nogle");
-		wc.newWord("nogen");
-		wc.newWord("mand");
-		wc.newWord("helt");
-		wc.newWord("tror");
-		wc.newWord("nok");
-		wc.newWord("sig");
-		wc.newWord("tale");
-		wc.newWord("dansk");
-		wc.newWord("da");
-		wc.newWord("dette");
-		wc.newWord("både");
-		wc.newWord("stige");
-		wc.newWord("stiger");
-		wc.newWord("hund");
-		wc.newWord("kat");
-		wc.newWord("hval");
-		wc.newWord("min");
-	}
-	
-	
-	private void dbEnglishSetup() {
-		wc.newWord("side");
-		wc.newWord("while");
-		wc.newWord("do");
-		wc.newWord("when");
-		wc.newWord("then");
-		wc.newWord("here");
-		wc.newWord("show");
-		wc.newWord("Indian");
-		wc.newWord("mountain");
-		wc.newWord("as");
-		wc.newWord("school");
-		wc.newWord("set");
-		wc.newWord("such");
-		wc.newWord("in");
-		wc.newWord("being");
-		wc.newWord("father");
-		wc.newWord("next");
-		wc.newWord("saw");
-		wc.newWord("next");
-		wc.newWord("which");
-		wc.newWord("he");
-		wc.newWord("on");
-		wc.newWord("keep");
-		wc.newWord("three");
-		wc.newWord("answer");
-		wc.newWord("below");
-		wc.newWord("under");
-		wc.newWord("say");
-		wc.newWord("your");
-		wc.newWord("family");
-		wc.newWord("write");
-		wc.newWord("feet");
-		wc.newWord("add");
-		wc.newWord("good");
-		wc.newWord("read");
-		wc.newWord("what");
-		wc.newWord("day");
-		wc.newWord("only");
-		wc.newWord("enough");
-		wc.newWord("go");
-		wc.newWord("great");
-		wc.newWord("had");
-		wc.newWord("why");
-		wc.newWord("help");
-		wc.newWord("found");
-		wc.newWord("off");
-		wc.newWord("if");
-		wc.newWord("put");
-		wc.newWord("came");
-		wc.newWord("boy");
-		wc.newWord("animal");
-		wc.newWord("time");
-		wc.newWord("four");
-		wc.newWord("first");
-		wc.newWord("hear");
-		wc.newWord("carry");
-		wc.newWord("paper");
-		wc.newWord("different");
-		wc.newWord("and");
-		wc.newWord("want");
-		wc.newWord("country");
-		wc.newWord("made");
-		wc.newWord("often");
-		wc.newWord("being");
-		wc.newWord("river");
-		wc.newWord("walk");
-		wc.newWord("mean");
-		wc.newWord("way");
-		wc.newWord("around");
-		wc.newWord("while");
-		wc.newWord("city");
-		wc.newWord("well");
-		wc.newWord("people");
-		wc.newWord("watch");
-		wc.newWord("miss");
-		wc.newWord("very");
-		wc.newWord("but");
-		wc.newWord("place");
-		wc.newWord("always");
-		wc.newWord("along");
-		wc.newWord("another");
-		wc.newWord("new");
-		wc.newWord("America");
-		wc.newWord("live");
-		wc.newWord("sometimes");
-		wc.newWord("quickly");
-		wc.newWord("line");
-		wc.newWord("down");
-		wc.newWord("quite");
-		wc.newWord("three");
-		wc.newWord("picture");
-		wc.newWord("began");
-		wc.newWord("plant");
-		wc.newWord("has");
-		wc.newWord("every");
-		wc.newWord("state");
-		wc.newWord("add");
-		wc.newWord("together");
-		wc.newWord("last");
-		wc.newWord("book");
-		wc.newWord("learn");
-		wc.newWord("study");
-		wc.newWord("two");
-		wc.newWord("name");
-		wc.newWord("young");
-		wc.newWord("now");
-		wc.newWord("because");
-		wc.newWord("would");
-		wc.newWord("food");
-		wc.newWord("large");
-		wc.newWord("saw");
-		wc.newWord("just");
-		wc.newWord("eye");
-		wc.newWord("us");
-		wc.newWord("spell");
-		wc.newWord("form");
-		wc.newWord("long");
-		wc.newWord("right");
-		wc.newWord("those");
-		wc.newWord("example");
-		wc.newWord("run");
-		wc.newWord("does");
-		wc.newWord("any");
-		wc.newWord("much");
-		wc.newWord("high");
-		wc.newWord("night");
-	}
-	
 	private void init() {
 		wc = new WordController();
 		cfg = new Config();
+		danish = new Danish();
+		english = new English();
 	}
 	
 }

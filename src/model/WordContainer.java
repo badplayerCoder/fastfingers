@@ -80,6 +80,17 @@ public class WordContainer {
 	}
 	
 	/*
+	 * 	Remove word with given parameter
+	 */
+	
+	public void removeWord(String text) {
+		Word word = findWord(text);
+		if(word != null) {
+			words.remove(word);
+		}
+	}
+	
+	/*
 	 * 	Drops all words in the arrayList to make room to new words
 	 * 	Use with care! It will clear the whole arraylist
 	 */
