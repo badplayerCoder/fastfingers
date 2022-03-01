@@ -10,10 +10,12 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 
 import addon.Config;
 import addon.CreateFile;
+import addon.OpenFile;
 import addon.WriteToFile;
 import controller.WordController;
 import database.DBWord;
@@ -39,6 +41,7 @@ public class MainMenu extends JFrame {
 	
 	private CreateFile createFile;
 	private WriteToFile writeFile;
+	private OpenFile openFile;
 
 	/**
 	 * Launch the application.
@@ -80,7 +83,7 @@ public class MainMenu extends JFrame {
 		btnWord.setBounds(170, 150, 120, 100);
 		contentPane.add(btnWord);
 		
-		JButton btnGame = new JButton("Game Menu");
+		JButton btnGame = new JButton("Start Game");
 		btnGame.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -120,6 +123,42 @@ public class MainMenu extends JFrame {
 		lblDisclaim = new JLabel("Made by Lasse Haslund");
 		lblDisclaim.setBounds(6, 350, 418, 16);
 		contentPane.add(lblDisclaim);
+		
+		JButton btnFolder = new JButton("Open folder");
+		btnFolder.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				//	Methods to open fastfingers folder at user.home
+				try {
+					openFile.openFolder();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnFolder.setBounds(577, 337, 117, 29);
+		contentPane.add(btnFolder);
+		
+		JButton btnLogTxt = new JButton("Open logs file");
+		btnLogTxt.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				//	Methods to open fastfingers logs at user.home
+				try {
+					openFile.openLog();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnLogTxt.setBounds(577, 308, 117, 29);
+		contentPane.add(btnLogTxt);
+		
+		JLabel lblNewLabel = new JLabel("Debug");
+		lblNewLabel.setHorizontalTextPosition(SwingConstants.CENTER);
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBounds(577, 291, 117, 16);
+		contentPane.add(lblNewLabel);
 		
 		init();
 	}
@@ -164,6 +203,7 @@ public class MainMenu extends JFrame {
 		config = new Config();
 		createFile = new CreateFile();
 		writeFile = new WriteToFile();
+		openFile = new OpenFile();
 		try {
 			robot = new Robot();
 			createFile.createLogFile();

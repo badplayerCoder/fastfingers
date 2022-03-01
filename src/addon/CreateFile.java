@@ -12,7 +12,7 @@ public class CreateFile {
 		String pathFolder = currentPath + "/Fastfingers";
 		new File(currentPath,"/Fastfingers").mkdirs();
 		try {
-			new File(currentPath,"/Fastfingers").mkdirs();
+			//new File(currentPath,"/Fastfingers").mkdirs();
 		    File file = new File(pathFolder, "fastfingerlogs.txt");
 		    if (file.createNewFile()) {
 		    	config.printText("File created: " + file.getName());
@@ -27,7 +27,7 @@ public class CreateFile {
 	
 	public void createWrongWordFile() {
 		String currentPath = System.getProperty("user.home") + "/Fastfingers";
-		String pathFolder = currentPath + "/Fastfingers";
+		//String pathFolder = currentPath + "/Fastfingers";
 		try {
 		      File myObj = new File(currentPath, "wrongwords.txt");
 		      if (myObj.createNewFile()) {

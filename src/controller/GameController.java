@@ -131,7 +131,7 @@ public class GameController {
 	}
 	
 	/*
-	 * 	Getters of Score
+	 * 	Getters & Setters of Score
 	 */
 	
 	public int getCorrect() {
@@ -144,6 +144,14 @@ public class GameController {
 	
 	public double getProcent() {
 		return score.getProcent();
+	}
+	
+	public void setCorrect(int amount) {
+		score.setCorrect(amount);
+	}
+	
+	public void setWrong(int amount) {
+		score.setWrong(amount);
 	}
 	
 }

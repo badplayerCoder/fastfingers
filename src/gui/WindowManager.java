@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 
 import dialog.ExistDialog;
 import dialog.MainMenuDialog;
+import dialog.ResultDialog;
 
 /**
  * @author Lasse
@@ -55,6 +56,12 @@ public class WindowManager {
 		ExistDialog ed = new ExistDialog(text);
 		ed.setLocationRelativeTo(null);
 		ed.setVisible(true);
+	}
+	
+	public void goResultDialog(int wpm, double accuracy, int right, int wrong) {
+		ResultDialog rd = new ResultDialog(wpm, accuracy, right, wrong);
+		rd.setLocationRelativeTo(null);
+		rd.setVisible(true);
 	}
 	
 }

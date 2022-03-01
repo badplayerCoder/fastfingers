@@ -54,22 +54,32 @@ public class Score {
 		wrong++;
 	}
 	
+	public void setCorrect(int amount) {
+		this.correct = amount;
+	}
+	
+	public void setWrong(int amount) {
+		this.wrong = amount;
+	}
+	
 	/*
 	 * 	Methods
 	 */
 	
 	public double getProcent() {
 		double procent = 0;
-		double totalAnswers = getCorrect() + getWrong();
+		double totalAnswers = (getCorrect() + getWrong());
 		double correctph = getCorrect();
+		double roundOff = 0;
 		if(totalAnswers == 0) {
 			//Nothing
 		}else {
 			procent = (correctph / totalAnswers);
 			procent *= 100;
+			roundOff = Math.round(procent * 100.0) / 100.0;
 		}
 		
-		return procent; 
+		return roundOff; 
 	}
 	
 }
