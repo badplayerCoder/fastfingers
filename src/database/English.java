@@ -146,6 +146,12 @@ public class English {
 		wc.newWord("much");
 		wc.newWord("high");
 		wc.newWord("night");
+		wc.newWord("water");
+		wc.newWord("home");
+		wc.newWord("face");
+		wc.newWord("could");
+		wc.newWord("life");
+		wc.newWord("also");
 	}
 	
 }

@@ -90,6 +90,7 @@ public class GameGUI extends JFrame {
 		
 		//	This is to set focus for textField when GameGUI is opened
 		addWindowListener(new WindowAdapter() {
+		     @Override
 		     public void windowOpened(WindowEvent e) {
 		    	 textField.requestFocus();
 		     }
@@ -128,7 +129,6 @@ public class GameGUI extends JFrame {
 		try {
 			robot = new Robot();
 		} catch (AWTException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		windowManager = new WindowManager();

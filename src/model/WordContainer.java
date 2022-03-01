@@ -20,8 +20,10 @@ public class WordContainer {
 	
 	private Config config;
 	
+	private Random random = new Random();
+	
 	/*
-	 * 	Constructor for the wordcontainer class
+	 * 	Constructor for the wordContainer class
 	 * 	Constructor is a singleton, so can be used once at the time
 	 */
 	
@@ -101,8 +103,6 @@ public class WordContainer {
 	}
 	
 	public Word randomWord() {
-		//	Create instance of Random class
-		Random random = new Random();
 		
 		//	Create new word & set it to null
 		Word word = null;

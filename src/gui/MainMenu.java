@@ -1,7 +1,6 @@
 package gui;
 
 import java.awt.AWTException;
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Robot;
 
@@ -15,7 +14,6 @@ import java.time.format.DateTimeFormatter;
 
 import addon.Config;
 import addon.CreateFile;
-import addon.Tester;
 import addon.WriteToFile;
 import controller.WordController;
 import database.DBWord;
@@ -170,7 +168,6 @@ public class MainMenu extends JFrame {
 			robot = new Robot();
 			createFile.createLogFile();
 		} catch (AWTException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		addDisclaim();

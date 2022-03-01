@@ -14,7 +14,6 @@ import addon.Config;
 public class WordController {
 
 	private WordContainer wordContainer;
-	private Config config;
 	
 	/*
 	 * 	Constructor & it is created when the class is called  
@@ -39,7 +38,8 @@ public class WordController {
 	 */
 	
 	public Word findWord(String text) {
-		Word word = findWord(text);
+		Word word = null;
+		word = findWord(text);
 		return word;
 	}
 	
@@ -100,7 +100,7 @@ public class WordController {
 	 */
 	
 	private void init() {
-		config = new Config();
+		Config config = new Config();
 		config.printText("Init word controller called");
 		printWords();
 	}

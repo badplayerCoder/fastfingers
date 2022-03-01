@@ -98,6 +98,7 @@ public class WordGUI extends JFrame {
 		
 		//This is to set focus for wordField when WordGUI is opened
 		addWindowListener(new WindowAdapter() {
+		     @Override
 		     public void windowOpened(WindowEvent e) {
 		    	 wordField.requestFocus();
 		     }
@@ -138,7 +139,6 @@ public class WordGUI extends JFrame {
 			lblFeedback.setText("The word " + s.toUpperCase() + " has been added");
 		}else {
 			windowManager.goExistDialog(s);
-			//lblFeedback.setText("The word " + s.toUpperCase() + " is already added");
 		}
 	}
 	
@@ -167,7 +167,6 @@ public class WordGUI extends JFrame {
 		try {
 			robot = new Robot();
 		} catch (AWTException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		writeFile = new WriteToFile();
