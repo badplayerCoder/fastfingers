@@ -124,7 +124,7 @@ public class GameGUI extends JFrame {
 			public void mousePressed(MouseEvent e) {
 				writeFile.onClosed("Exiting Game GUI");
 				windowManager.goMainMenu();
-				scheduler.shutdown();
+				canShutdown();
 				setVisible(false);
 			}
 		});
@@ -210,6 +210,16 @@ public class GameGUI extends JFrame {
 		String txt = null;
 		txt = timer.updateTimer(startTime);
 		lblTimer.setText(txt);
+	}
+	
+	/*
+	 * 	Checks if scheduler can be shutdown or not
+	 */
+	
+	private void canShutdown() {
+		if(scheduler != null) {
+			scheduler.shutdown();
+		}
 	}
 	
 	/*
