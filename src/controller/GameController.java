@@ -3,15 +3,12 @@
  */
 package controller;
 
-import javax.swing.JLabel;
-
 import addon.Config;
 import addon.Score;
-import gui.GameGUI;
 import model.Word;
 
 /**
- * @author Lasse
+ * @author Lasse Haslund
  *
  */
 public class GameController {
@@ -68,14 +65,16 @@ public class GameController {
 		
 		return lblFourth;
 	}
+	
 	/*
 	 * 	The logic for textField at gameGUI to check if the input is the same as lblFirst
 	 * 	@Returns true if textfield's input as lblFirst
+	 * 	@param takes string text to check if it is the same as lblFirst
 	 */
 	
 	public boolean checkTextBox(String text) {
 		boolean check = false;
-		if(text.equals(lblFirst.toString())) {
+		if(text.equals(lblFirst)) {
 			score.addCorrect();
 			check = true;
 		}else {

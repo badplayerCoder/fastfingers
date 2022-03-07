@@ -152,6 +152,12 @@ public class English {
 		wc.newWord("could");
 		wc.newWord("life");
 		wc.newWord("also");
+		wc.newWord("like");
+		wc.newWord("house");
+		wc.newWord("oil");
+		wc.newWord("took");
+		wc.newWord("close");
+		wc.newWord("house");
 	}
 	
 }

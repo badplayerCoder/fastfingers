@@ -7,7 +7,13 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import addon.Placeholder;
 import controller.WordController;
+import gui.WindowManager;
+import gui.WordGUI;
+import gui.WordGUIIF;
+
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.event.MouseAdapter;
@@ -20,30 +26,20 @@ public class ExistDialog extends JDialog {
 	private JLabel lblFeedback;
 	
 	private WordController wordController;
-	
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			ExistDialog dialog = new ExistDialog("Feedback");
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+	private WindowManager wm;
 
 	/**
 	 * Create the dialog.
 	 */
-	public ExistDialog(String text) {
+	public ExistDialog(String text, WordGUI gui) {
 		setBounds(100, 100, 450, 200);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		setLocationRelativeTo(null);
+		
+		wm = new WindowManager();
 		
 		lblFeedback = new JLabel("Feedback");
 		lblFeedback.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -75,8 +71,9 @@ public class ExistDialog extends JDialog {
 					@Override
 					public void mousePressed(MouseEvent e) {
 						wordController.removeWord(text);
-						System.out.println(text);
+						gui.setFeedbackRemove(text);
 						setVisible(false);
+						dispose();
 					}
 				});
 				cancelButton.setActionCommand("Cancel");
@@ -84,10 +81,13 @@ public class ExistDialog extends JDialog {
 			}
 		}
 		
+		
+		
 		init();
 	}
 	
 	private void init() {
 		wordController = new WordController();
+		
 	}
 }

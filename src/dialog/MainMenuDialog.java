@@ -56,6 +56,7 @@ public class MainMenuDialog extends JDialog {
 					@Override
 					public void mousePressed(MouseEvent e) {
 						setVisible(false);
+						dispose();
 					}
 				});
 				okButton.setActionCommand("OK");

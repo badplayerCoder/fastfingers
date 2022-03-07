@@ -16,14 +16,16 @@ import java.awt.event.WindowEvent;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import controller.WordController;
+import model.Word;
 import addon.Config;
+import addon.Placeholder;
 import addon.WriteToFile;
 
 import javax.swing.SwingConstants;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-public class WordGUI extends JFrame {
+public class WordGUI extends JFrame implements WordGUIIF {
 
 	private JPanel contentPane;
 	private WindowManager windowManager;
@@ -37,6 +39,10 @@ public class WordGUI extends JFrame {
 	private JLabel lblInfo;
 	
 	private WriteToFile writeFile;
+	
+	private Placeholder placeHolder;
+	
+	private WordGUI wordgui;
 
 	/**
 	 * Launch the application.
@@ -66,20 +72,21 @@ public class WordGUI extends JFrame {
 		contentPane.setLayout(null);
 		setLocationRelativeTo(null);
 		
+		wordgui = this;
+		
 		JButton btnBack = new JButton("Back");
 		btnBack.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				writeFile.onClosed("Exiting Word GUI");
-				windowManager.goMainMenu();
-				setVisible(false);
+				exitWordGUI();
 			}
 		});
 		btnBack.setBounds(10, 11, 75, 23);
 		contentPane.add(btnBack);
 		
 		lblInfo = new JLabel("Enter here, the word you want to add or remove");
-		lblInfo.setBounds(229, 120, 272, 23);
+		lblInfo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblInfo.setBounds(156, 120, 384, 23);
 		contentPane.add(lblInfo);
 		
 		wordField = new JTextField();
@@ -89,6 +96,9 @@ public class WordGUI extends JFrame {
 				if(e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_SPACE) {
 					addNewWord();
 					clearTextField();
+				}
+				if(e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+					exitWordGUI();
 				}
 			}
 		});
@@ -129,6 +139,17 @@ public class WordGUI extends JFrame {
 	}
 	
 	/*
+	 * 	Exit WordGUI method
+	 */
+	
+	private void exitWordGUI() {
+		writeFile.onClosed("Exiting Word GUI");
+		windowManager.goMainMenu();
+		setVisible(false);
+		dispose();
+	}
+	
+	/*
 	 * 	Goes through wordController to check & add new word given in wordField. This is being used by the button & wordField ENTER key
 	 */
 	
@@ -138,7 +159,7 @@ public class WordGUI extends JFrame {
 			writeFile.writeWordToFile(s + " has been added");
 			lblFeedback.setText("The word " + s.toUpperCase() + " has been added");
 		}else {
-			windowManager.goExistDialog(s);
+			windowManager.goExistDialog(s, wordgui);
 		}
 	}
 	
@@ -147,12 +168,20 @@ public class WordGUI extends JFrame {
 	 */
 	
 	private void clearTextField() {
-//		Clears textfield
+		//	Clears textfield
 		wordField.setText(null);
 		
 		//	Uses robot to backspace in textfield to start at the beginning everytime
 		robot.keyPress(KeyEvent.VK_BACK_SPACE);
 		robot.keyRelease(KeyEvent.VK_BACK_SPACE);
+	}
+	
+	/*
+	 * 	Sets lblFeedback 
+	 */
+	
+	public void setFeedbackRemove(String text) {
+		lblFeedback.setText(text.toUpperCase() + " has been removed");
 	}
 	
 	/*
@@ -164,6 +193,7 @@ public class WordGUI extends JFrame {
 		config.printText("Init word gui called");
 		windowManager = new WindowManager();
 		wordController = new WordController();
+		placeHolder = new Placeholder();
 		try {
 			robot = new Robot();
 		} catch (AWTException e) {

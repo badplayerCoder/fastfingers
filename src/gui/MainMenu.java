@@ -28,17 +28,17 @@ import javax.swing.SwingConstants;
 public class MainMenu extends JFrame {
 
 	private JPanel contentPane;
-	
+
 	private WindowManager windowManager;
 	private DBWord dbWord;
 	private Robot robot;
 	private Config config;
 	private WordController wordController;
-	
+
 	private JTextField textField;
 	private JLabel lblLang;
 	private JLabel lblDisclaim;
-	
+
 	private CreateFile createFile;
 	private WriteToFile writeFile;
 	private OpenFile openFile;
@@ -70,7 +70,7 @@ public class MainMenu extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		setLocationRelativeTo(null);
-		
+
 		JButton btnWord = new JButton("Word Menu");
 		btnWord.addMouseListener(new MouseAdapter() {
 			@Override
@@ -78,57 +78,59 @@ public class MainMenu extends JFrame {
 				writeFile.onClosed("Exiting main menu");
 				windowManager.goWordMenu();
 				setVisible(false);
+				dispose();
 			}
 		});
 		btnWord.setBounds(170, 150, 120, 100);
 		contentPane.add(btnWord);
-		
+
 		JButton btnGame = new JButton("Start Game");
 		btnGame.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				if(wordController.getAmountWords() == 0) {
+				if (wordController.getAmountWords() == 0) {
 					windowManager.goMainMenuDialog();
-				}else {
+				} else {
 					writeFile.onClosed("Exiting main menu");
 					windowManager.goGameMenu();
 					setVisible(false);
+					dispose();
 				}
 			}
 		});
 		btnGame.setBounds(410, 150, 120, 100);
 		contentPane.add(btnGame);
-		
+
 		textField = new JTextField();
 		textField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
-					
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+
 					textFieldLogic();
-					
+
 				}
 			}
 		});
 		textField.setBounds(278, 66, 146, 31);
 		contentPane.add(textField);
 		textField.setColumns(10);
-		
+
 		lblLang = new JLabel("Supported languages: danish & english");
 		lblLang.setHorizontalAlignment(SwingConstants.CENTER);
 		lblLang.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblLang.setBounds(170, 41, 360, 23);
 		contentPane.add(lblLang);
-		
+
 		lblDisclaim = new JLabel("Made by Lasse Haslund");
 		lblDisclaim.setBounds(6, 350, 418, 16);
 		contentPane.add(lblDisclaim);
-		
+
 		JButton btnFolder = new JButton("Open folder");
 		btnFolder.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				//	Methods to open fastfingers folder at user.home
+				// Methods to open fastfingers folder at user.home
 				try {
 					openFile.openFolder();
 				} catch (IOException e1) {
@@ -138,12 +140,12 @@ public class MainMenu extends JFrame {
 		});
 		btnFolder.setBounds(577, 337, 117, 29);
 		contentPane.add(btnFolder);
-		
+
 		JButton btnLogTxt = new JButton("Open logs file");
 		btnLogTxt.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				//	Methods to open fastfingers logs at user.home
+				// Methods to open fastfingers logs at user.home
 				try {
 					openFile.openLog();
 				} catch (IOException e1) {
@@ -153,49 +155,53 @@ public class MainMenu extends JFrame {
 		});
 		btnLogTxt.setBounds(577, 308, 117, 29);
 		contentPane.add(btnLogTxt);
-		
+
 		JLabel lblNewLabel = new JLabel("Debug");
 		lblNewLabel.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(577, 291, 117, 16);
 		contentPane.add(lblNewLabel);
-		
+
 		init();
 	}
-	
+
 	private void textFieldLogic() {
 		String stext = textField.getText();
-		
-		if(dbWord.pickLang(stext).equals(stext)) {
-			if(dbWord.pickLang(stext).equals("help") || dbWord.pickLang(stext).equals("info")) {
-				
-				//	Clears textfield
+
+		if (dbWord.pickLang(stext).equals(stext)) {
+			if (dbWord.pickLang(stext).equals("help") || dbWord.pickLang(stext).equals("info")) {
+
+				// Clears textfield
 				textField.setText(null);
-				
-				//	Uses robot to backspace in textfield to start at the beginning everytime
+
+				// Uses robot to backspace in textfield to start at the beginning everytime
 				robot.keyPress(KeyEvent.VK_BACK_SPACE);
 				robot.keyRelease(KeyEvent.VK_BACK_SPACE);
-				
+
 				lblLang.setText("Supported languages: danish & english");
-				
-			}else {
-				//	Clears textfield
-				textField.setText(null);
-				
-				//	Uses robot to backspace in textfield to start at the beginning everytime
-				robot.keyPress(KeyEvent.VK_BACK_SPACE);
-				robot.keyRelease(KeyEvent.VK_BACK_SPACE);
-				
-				lblLang.setText(stext + " has been activated with " + wordController.getAmountWords() + " different words");
+
+			} else {
+				if (stext.equals("")) {
+					lblLang.setText("Textfield is empty! Do 'help' or 'info'!");
+				} else {
+					// Clears textfield
+					textField.setText(null);
+
+					// Uses robot to backspace in textfield to start at the beginning everytime
+					robot.keyPress(KeyEvent.VK_BACK_SPACE);
+					robot.keyRelease(KeyEvent.VK_BACK_SPACE);
+
+					lblLang.setText(stext + " has been activated with " + wordController.getAmountWords() + " different words");
+				}
 			}
-		}else{
-			
+		} else {
+
 			lblLang.setText(stext + " is not supported");
-			
+
 		}
 	}
-	
-	//	Init on startup
+
+	// Init on startup
 	private void init() {
 		windowManager = new WindowManager();
 		wordController = new WordController();
@@ -214,10 +220,10 @@ public class MainMenu extends JFrame {
 		writeFile.onOpen("Main menu started");
 		writeFile.onOpen(addDisclaim());
 	}
-	
+
 	private String addDisclaim() {
-		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");  
-        String formatDateTime = config.now.format(format);  
+		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+		String formatDateTime = config.now.format(format);
 		String ph = "Made by " + config.author + " - Version: " + config.version + " - " + formatDateTime;
 		lblDisclaim.setText(ph);
 		return formatDateTime;

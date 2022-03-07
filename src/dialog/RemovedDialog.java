@@ -5,60 +5,45 @@ import java.awt.FlowLayout;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+
+import addon.Placeholder;
+import gui.WindowManager;
+import gui.WordGUI;
+import gui.WordGUIIF;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class ResultDialog extends JDialog {
+public class RemovedDialog extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
-
 	private JLabel lblFeedback;
-	private JLabel lblAccuary;
-	private JLabel lblCorrect;
-	private JLabel lblWrong;
 	
+	private WordGUI gui;
+
 	/**
 	 * Create the dialog.
 	 */
-	public ResultDialog(int wpm, double accuracy, int right, int wrong) {
-		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+	public RemovedDialog(String text, WordGUI gui) {
 		setBounds(100, 100, 450, 200);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		
+		this.gui = gui;
+		
 		lblFeedback = new JLabel("Feedback");
 		lblFeedback.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblFeedback.setHorizontalAlignment(SwingConstants.CENTER);
-		lblFeedback.setBounds(6, 6, 438, 32);
+		lblFeedback.setBounds(6, 44, 438, 28);
 		contentPanel.add(lblFeedback);
-		lblFeedback.setText(wpm + " WPM");
 		
-		lblAccuary = new JLabel("Feedback");
-		lblAccuary.setHorizontalTextPosition(SwingConstants.CENTER);
-		lblAccuary.setHorizontalAlignment(SwingConstants.CENTER);
-		lblAccuary.setBounds(6, 39, 438, 22);
-		contentPanel.add(lblAccuary);
-		lblAccuary.setText("Accuracy: " + accuracy + "%");
-		
-		lblCorrect = new JLabel("Feedback");
-		lblCorrect.setHorizontalTextPosition(SwingConstants.CENTER);
-		lblCorrect.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCorrect.setBounds(6, 62, 438, 22);
-		contentPanel.add(lblCorrect);
-		lblCorrect.setText("Correct words: " + right);
-			
-		lblWrong = new JLabel("Feedback");
-		lblWrong.setHorizontalTextPosition(SwingConstants.CENTER);
-		lblWrong.setHorizontalAlignment(SwingConstants.CENTER);
-		lblWrong.setBounds(6, 87, 438, 22);
-		contentPanel.add(lblWrong);
-		lblWrong.setText("Wrong words: " + wrong);
+		lblFeedback.setText(text.toUpperCase() + " has been removed!");
 		
 		{
 			JPanel buttonPane = new JPanel();
@@ -71,6 +56,7 @@ public class ResultDialog extends JDialog {
 					public void mousePressed(MouseEvent e) {
 						setVisible(false);
 						dispose();
+						gui.setFeedbackRemove(text);
 					}
 				});
 				okButton.setActionCommand("OK");
@@ -79,10 +65,7 @@ public class ResultDialog extends JDialog {
 			}
 		}
 		
-		init();
-	}
-	
-	private void init() {
-		//Do nothing
+		
+		
 	}
 }

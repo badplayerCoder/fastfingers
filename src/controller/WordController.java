@@ -39,7 +39,7 @@ public class WordController {
 	
 	public Word findWord(String text) {
 		Word word = null;
-		word = findWord(text);
+		word = wordContainer.findWord(text);
 		return word;
 	}
 	

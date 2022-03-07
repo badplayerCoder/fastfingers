@@ -5,8 +5,10 @@ package gui;
 
 import javax.swing.JFrame;
 
+import addon.Placeholder;
 import dialog.ExistDialog;
 import dialog.MainMenuDialog;
+import dialog.RemovedDialog;
 import dialog.ResultDialog;
 
 /**
@@ -52,14 +54,20 @@ public class WindowManager {
 		mmd.setVisible(true);
 	}
 	
-	public void goExistDialog(String text) {
-		ExistDialog ed = new ExistDialog(text);
+	public void goExistDialog(String text, WordGUI gui) {
+		ExistDialog ed = new ExistDialog(text, gui);
 		ed.setLocationRelativeTo(null);
 		ed.setVisible(true);
 	}
 	
 	public void goResultDialog(int wpm, double accuracy, int right, int wrong) {
 		ResultDialog rd = new ResultDialog(wpm, accuracy, right, wrong);
+		rd.setLocationRelativeTo(null);
+		rd.setVisible(true);
+	}
+	
+	public void goRemovedDialog(String text, WordGUI gui) {
+		RemovedDialog rd = new RemovedDialog(text, gui);
 		rd.setLocationRelativeTo(null);
 		rd.setVisible(true);
 	}

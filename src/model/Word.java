@@ -18,7 +18,6 @@ public class Word {
 	 * 	The constructor of word
 	 * 	Creates new word
 	 */
-	
 	public Word(String word) {
 		this.word = word;
 	}
