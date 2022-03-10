@@ -3,6 +3,8 @@
  */
 package gui;
 
+import java.io.FileNotFoundException;
+
 import javax.swing.JFrame;
 
 import addon.Placeholder;
@@ -12,7 +14,7 @@ import dialog.RemovedDialog;
 import dialog.ResultDialog;
 
 /**
- * @author Lasse
+ * @author Lasse Haslund
  *
  */
 public class WindowManager {
@@ -42,7 +44,7 @@ public class WindowManager {
 	 * 	Changes the window to game gui
 	 */
 	
-	public void goGameMenu() {
+	public void goGameMenu() throws FileNotFoundException {
 		GameGUI gg = new GameGUI();
 		gg.setLocationRelativeTo(null);
 		gg.setVisible(true);

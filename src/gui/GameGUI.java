@@ -10,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 
 import addon.Config;
 import addon.CreateFile;
+import addon.Highscore;
 import addon.Timer;
 import addon.WriteToFile;
 import controller.GameController;
@@ -23,10 +24,16 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.FileNotFoundException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.awt.event.KeyAdapter;
 import javax.swing.SwingConstants;
+
+/**
+ * 
+ * @author lassehas
+ */
 
 public class GameGUI extends JFrame {
 
@@ -34,6 +41,8 @@ public class GameGUI extends JFrame {
 	private JTextField textField;
 	private JLabel lblFirst;
 	private JLabel lblScore;
+	private JLabel lblBestWPM;
+	private JLabel lblHighscore;
 
 	private Robot robot;
 
@@ -42,6 +51,7 @@ public class GameGUI extends JFrame {
 	private Config config;
 	private WriteToFile writeFile;
 	private Timer timer;
+	private HighscoreIF highScore;
 
 	// Game variable
 	private int startTime = 60; // Default as 60
@@ -69,8 +79,10 @@ public class GameGUI extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * 
+	 * @throws FileNotFoundException
 	 */
-	public GameGUI() {
+	public GameGUI() throws FileNotFoundException {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 700, 400);
 		contentPane = new JPanel();
@@ -84,13 +96,13 @@ public class GameGUI extends JFrame {
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_SPACE) {
 					gameTextFieldLogic();
-					if(!started) {
+					if (!started) {
 						startTimer();
 					}
 					started = true;
 					config.printText("space bar is pressed");
 				}
-				if(e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 					exitGameGUI();
 				}
 			}
@@ -131,32 +143,48 @@ public class GameGUI extends JFrame {
 		lblTimer.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTimer.setBounds(445, 224, 61, 16);
 		contentPane.add(lblTimer);
+
+		lblHighscore = new JLabel("HIGHSCORE");
+		lblHighscore.setHorizontalAlignment(SwingConstants.CENTER);
+		lblHighscore.setBounds(57, 125, 90, 23);
+		contentPane.add(lblHighscore);
+
+		lblBestWPM = new JLabel("");
+		lblBestWPM.setHorizontalAlignment(SwingConstants.CENTER);
+		lblBestWPM.setBounds(57, 149, 90, 23);
+		contentPane.add(lblBestWPM);
 		setLocationRelativeTo(null);
 
 		// Init method
 		init();
 	}
 
-	/*
-	 * Timer
+	/**
+	 * The whole timer code for game GUI. Uses int startTime & boolean open in 'if
+	 * statements'
 	 */
 
 	private void startTimer() {
+		// TODO Check if the code can be more eff
 		if (!started) {
 			scheduler = Executors.newScheduledThreadPool(1);
 			final Runnable refresh = new Runnable() {
 				public void run() {
-					int amount = (gameController.getCorrect() + gameController.getWrong());
+
 					double accuracy = gameController.getProcent();
 					int right = gameController.getCorrect();
 					int wrong = gameController.getWrong();
+					int amount = (right + wrong);
+
 					if (startTime == 0) {
 						if (!open) {
 							open = true;
-							scheduler.shutdown();
-							combineReset();
+							writeFile.writeHighScoreToFile(amount);
 							windowManager.goResultDialog(amount, accuracy, right, wrong);
+							combineReset();
+							wholeHighscore();
 							config.printInt(startTime);
+							scheduler.shutdown();
 						}
 					} else {
 						startTime--;
@@ -171,11 +199,16 @@ public class GameGUI extends JFrame {
 		}
 	}
 
-	/*
-	 * Init controllers & managers in the class at startup
+	/**
+	 * Init controllers & managers in the class at startup. Writes status to the log
+	 * file
+	 * 
+	 * @throws FileNotFoundException
 	 */
 
-	private void init() {
+	private void init() throws FileNotFoundException {
+
+		highScore = new Highscore();
 		try {
 			robot = new Robot();
 		} catch (AWTException e) {
@@ -187,37 +220,61 @@ public class GameGUI extends JFrame {
 		writeFile = new WriteToFile();
 		CreateFile createFile = new CreateFile();
 		timer = new Timer();
+
 		updateTimer();
 		createFile.createWrongWordFile();
+		createFile.createHighScore();
 
 		writeFile.onOpen("Game GUI started");
 
-		setup();
-		scoreSetup();
+		setupLabel();
+		setupScore();
+		wholeHighscore();
 	}
 
-	/*
-	 * 	Updates the timer on gui when called
+	/**
+	 * Updates the timer on gui when called
 	 */
-	
+
 	private void updateTimer() {
 		String txt = null;
 		txt = timer.updateTimer(startTime);
 		lblTimer.setText(txt);
 	}
 
-	/*
-	 * 	Exit GameGUI method
+	/**
+	 * Updates highscore
 	 */
-	
+
+	private void wholeHighscore() {
+		try {
+			highScore.setHighscore();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		updateHighscore();
+	}
+
+	private void updateHighscore() {
+		String wpm = null;
+		wpm = highScore.getTop().toString() + " WPM";
+		lblBestWPM.setText(wpm);
+	}
+
+	/**
+	 * Exit GameGUI method by setvisible to false & dispose the gui
+	 */
+
 	private void exitGameGUI() {
 		writeFile.onClosed("Exiting Game GUI");
 		windowManager.goMainMenu();
 		canShutdown();
 		setVisible(false);
+		dispose();
 	}
-	
-	/*
+
+	/**
 	 * Checks if scheduler can be shutdown or not
 	 */
 
@@ -229,8 +286,8 @@ public class GameGUI extends JFrame {
 		}
 	}
 
-	/*
-	 * Combine methods to restart game
+	/**
+	 * Combine all the methods needed to restart game
 	 */
 
 	private void combineReset() {
@@ -240,7 +297,7 @@ public class GameGUI extends JFrame {
 		updateTimer();
 	}
 
-	/*
+	/**
 	 * Clears textField! Used when there is needed without checking word
 	 */
 
@@ -253,8 +310,9 @@ public class GameGUI extends JFrame {
 		robot.keyRelease(KeyEvent.VK_BACK_SPACE);
 	}
 
-	/*
-	 * Method to hold game logic with the textfield
+	/**
+	 * Logic behind the textField. Checks if the word in textField is equals to
+	 * lblFirst in the gameController
 	 */
 
 	private void gameTextFieldLogic() {
@@ -271,7 +329,7 @@ public class GameGUI extends JFrame {
 
 			// Updates labels & score
 			updateLabel();
-			scoreSetup();
+			setupScore();
 
 		} else {
 			String text = textField.getText();
@@ -290,27 +348,27 @@ public class GameGUI extends JFrame {
 
 			// Updates labels & score
 			updateLabel();
-			scoreSetup();
+			setupScore();
 		}
 	}
 
-	/*
+	/**
 	 * Updates words & what place the words are in the label
 	 */
 
 	private void updateLabel() {
-		String text = "<html>" + gameController.getFirst() + " " + gameController.getSecond() + " "
-				+ gameController.getThird() + " " + gameController.getFourth();
+		String text = null;
+		text = gameController.updateLabel();
 		lblFirst.setText(text);
 	}
 
-	/*
+	/**
 	 * Setups at startup words in the label place
 	 */
 
-	private void setup() {
-		String text = "<html>" + gameController.setLabelFirst() + " " + gameController.setLabelSecond() + " "
-				+ gameController.setLabelThird() + " " + gameController.setLabelFourth();
+	private void setupLabel() {
+		String text = null;
+		text = gameController.setupLabel();
 		lblFirst.setText(text);
 	}
 
@@ -319,24 +377,25 @@ public class GameGUI extends JFrame {
 	 * called
 	 */
 
-	private void scoreSetup() {
-		String text = "<html>Correct: " + gameController.getCorrect() + "<br>Wrong: " + gameController.getWrong()
-				+ "<br>Accuracy: " + gameController.getProcent() + "%";
-
+	private void setupScore() {
+		String text = null;
+		text = gameController.setupScore();
 		lblScore.setText(text);
 	}
 
+	/**
+	 * Resets score & updates the display
+	 */
+
 	private void resetScore() {
-		// Resets correct words
-		gameController.setCorrect(0);
-		// Resets wrong words
-		gameController.setWrong(0);
+		// Resets score
+		gameController.resetScore();
 		// Updates score
-		scoreSetup();
+		setupScore();
 	}
 
-	/*
-	 * Setters for game variables
+	/**
+	 * Resets the game variables to default
 	 */
 
 	private void doReset() {
@@ -344,5 +403,4 @@ public class GameGUI extends JFrame {
 		started = false; // Sets started to false
 		open = false; // Sets open to false
 	}
-
 }

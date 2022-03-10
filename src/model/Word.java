@@ -4,7 +4,7 @@
 package model;
 
 /**
- * @author Lasse
+ * @author Lasse Haslund
  *
  */
 public class Word {
@@ -14,16 +14,17 @@ public class Word {
 	private String word;
 	
 	
-	/*
-	 * 	The constructor of word
-	 * 	Creates new word
+	/**
+	 * 	Constructor of word class
+	 * 	@param word given string text to create new word class with given string word
 	 */
 	public Word(String word) {
 		this.word = word;
 	}
 	
-	/*
-	 * 	Returns word on method call
+	/**
+	 * 	Word getter
+	 * 	@return word	returns the string word given to the class of the start
 	 */
 	public String getWord() {
 		return word;

@@ -10,11 +10,13 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 
 import addon.Config;
 import addon.CreateFile;
+import addon.Highscore;
 import addon.OpenFile;
 import addon.WriteToFile;
 import controller.WordController;
@@ -92,7 +94,11 @@ public class MainMenu extends JFrame {
 					windowManager.goMainMenuDialog();
 				} else {
 					writeFile.onClosed("Exiting main menu");
-					windowManager.goGameMenu();
+					try {
+						windowManager.goGameMenu();
+					} catch (FileNotFoundException e1) {
+						e1.printStackTrace();
+					}
 					setVisible(false);
 					dispose();
 				}
@@ -165,6 +171,10 @@ public class MainMenu extends JFrame {
 		init();
 	}
 
+	/**
+	 * 	textFieldLogic check if the given data in the textField input is equals to some keyword in the system
+	 */
+	
 	private void textFieldLogic() {
 		String stext = textField.getText();
 
@@ -220,7 +230,12 @@ public class MainMenu extends JFrame {
 		writeFile.onOpen("Main menu started");
 		writeFile.onOpen(addDisclaim());
 	}
-
+	
+	/**
+	 * 	Adds disclaim to the main menu at startup
+	 * @return	formatDateTime as string to display the time when program is opened
+	 */
+	
 	private String addDisclaim() {
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 		String formatDateTime = config.now.format(format);

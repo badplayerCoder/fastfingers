@@ -6,12 +6,16 @@ public class Danish {
 
 	private WordController wc;
 	
+	/**
+	 * 	Constructor for Danish language package
+	 */
+	
 	public Danish() {
 		wc = new WordController();
 	}
 	
-	/*
-	 * 	DB language setup
+	/**
+	 * 	DB language setup.
 	 * 
 	 *	To add new words to the setup do it like this:
 	 *	wc.newWord("The word you want to add");

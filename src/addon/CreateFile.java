@@ -40,4 +40,19 @@ public class CreateFile {
 		      e.printStackTrace();
 		}
 	}
+	
+	public void createHighScore() {
+		String currentPath = System.getProperty("user.home") + "/Fastfingers";
+		try {
+		      File myObj = new File(currentPath, "highscore.txt");
+		      if (myObj.createNewFile()) {
+		    	  config.printText("File created: " + myObj.getName());
+		      } else {
+		    	  config.printText("File already exists.");
+		      }
+		    } catch (IOException e) {
+		    	config.printText("An error occurred.");
+		      e.printStackTrace();
+		}
+	}
 }

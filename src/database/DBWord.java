@@ -14,11 +14,12 @@ public class DBWord {
 	
 	public DBWord() {
 		init();
-		//pickLang("danish"); // Commented out to make selv adding words to work again
 	}
 	
-	/*
-	 * 	Picks what lang to use, by dropDb first then pick lang db & setups new DB
+	/**
+	 * 	Picks what language to use, by dropDb first then pick language db & setups new DB
+	 * 	@param	text	is used to find out what language package is needed
+	 * 	@return	s	returns what case has been used in the switch case
 	 */
 	
 	public String pickLang(String text) {
@@ -41,12 +42,15 @@ public class DBWord {
 				s = "info";
 				danish.danishSetup();
 				break;
+			case "empty":
+				s = "empty";
+				break;
 		}
 		
 		return s;
 	}
 	
-	/*
+	/**
 	 * 	Use with care! It will empty the wordContainers arrayList in the model layer
 	 */
 	

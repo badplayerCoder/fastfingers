@@ -15,7 +15,7 @@ public class WordController {
 
 	private WordContainer wordContainer;
 	
-	/*
+	/**
 	 * 	Constructor & it is created when the class is called  
 	 */
 	
@@ -24,7 +24,11 @@ public class WordController {
 		init();
 	}
 	
-	//	Creates new word & adds it to arraylist from the wordContainer
+	/**
+	 * 	Creates new word & adds it to arraylist from the wordContainer
+	 * @param text	is used to check if the 'text' is in the system or not.
+	 * @return	false as default. true if parameter 'text' isnt in the system.
+	 */
 	public boolean newWord(String text) {
 		boolean success = false;
 		if(wordContainer.newWord(text)) {
@@ -33,8 +37,9 @@ public class WordController {
 		return success;
 	}
 	
-	/*
-	 *	Finds & returns word with given text	
+	/**
+	 *	Finds & returns word with given text
+	 *	@return	word	null as default. returns word object if it is in the system
 	 */
 	
 	public Word findWord(String text) {

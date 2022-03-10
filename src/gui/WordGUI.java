@@ -40,8 +40,6 @@ public class WordGUI extends JFrame implements WordGUIIF {
 	
 	private WriteToFile writeFile;
 	
-	private Placeholder placeHolder;
-	
 	private WordGUI wordgui;
 
 	/**
@@ -138,8 +136,8 @@ public class WordGUI extends JFrame implements WordGUIIF {
 		init();
 	}
 	
-	/*
-	 * 	Exit WordGUI method
+	/**
+	 * 	Exit WordGUI method by setvisible to false & dispose the gui
 	 */
 	
 	private void exitWordGUI() {
@@ -149,7 +147,7 @@ public class WordGUI extends JFrame implements WordGUIIF {
 		dispose();
 	}
 	
-	/*
+	/**
 	 * 	Goes through wordController to check & add new word given in wordField. This is being used by the button & wordField ENTER key
 	 */
 	
@@ -163,7 +161,7 @@ public class WordGUI extends JFrame implements WordGUIIF {
 		}
 	}
 	
-	/*
+	/**
 	 * 	Clear the wordField when using keyboard to add words by pressing ENTER key
 	 */
 	
@@ -184,8 +182,9 @@ public class WordGUI extends JFrame implements WordGUIIF {
 		lblFeedback.setText(text.toUpperCase() + " has been removed");
 	}
 	
-	/*
+	/**
 	 * 	Does all the startup things to make it all work
+	 * 	Writes to log file
 	 */
 	
 	private void init() {
@@ -193,7 +192,6 @@ public class WordGUI extends JFrame implements WordGUIIF {
 		config.printText("Init word gui called");
 		windowManager = new WindowManager();
 		wordController = new WordController();
-		placeHolder = new Placeholder();
 		try {
 			robot = new Robot();
 		} catch (AWTException e) {

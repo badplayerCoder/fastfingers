@@ -78,11 +78,5 @@ public class ResultDialog extends JDialog {
 				getRootPane().setDefaultButton(okButton);
 			}
 		}
-		
-		init();
-	}
-	
-	private void init() {
-		//Do nothing
 	}
 }

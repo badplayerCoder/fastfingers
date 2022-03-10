@@ -15,14 +15,11 @@ import addon.Config;
 public class WordContainer {
 
 	private static WordContainer instance;
-	
 	private ArrayList<Word> words;
-	
 	private Config config;
-	
 	private Random random = new Random();
 	
-	/*
+	/**
 	 * 	Constructor for the wordContainer class
 	 * 	Constructor is a singleton, so can be used once at the time
 	 */
@@ -81,8 +78,8 @@ public class WordContainer {
 		return word;
 	}
 	
-	/*
-	 * 	Remove word with given parameter
+	/**
+	 * 	Remove word with given string param
 	 */
 	
 	public void removeWord(String text) {
@@ -92,7 +89,7 @@ public class WordContainer {
 		}
 	}
 	
-	/*
+	/**
 	 * 	Drops all words in the arrayList to make room to new words
 	 * 	Use with care! It will clear the whole arraylist
 	 */
@@ -117,8 +114,9 @@ public class WordContainer {
 		return word;
 	}
 	
-	/*
+	/**
 	 * 	Prints all words of this container
+	 * 	Was used for testing
 	 */
 	
 	public void printWords() {
@@ -127,6 +125,11 @@ public class WordContainer {
 			config.printWord(w);
 		}
 	}
+	
+	/**
+	 * Get amount words method
+	 * @return	sum 	the amount of words in the container atm
+	 */
 	
 	public int getAmountWords() {
 		//Returns the count of words

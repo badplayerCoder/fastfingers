@@ -39,8 +39,6 @@ public class ExistDialog extends JDialog {
 		contentPanel.setLayout(null);
 		setLocationRelativeTo(null);
 		
-		wm = new WindowManager();
-		
 		lblFeedback = new JLabel("Feedback");
 		lblFeedback.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblFeedback.setHorizontalAlignment(SwingConstants.CENTER);
@@ -88,6 +86,6 @@ public class ExistDialog extends JDialog {
 	
 	private void init() {
 		wordController = new WordController();
-		
+		wm = new WindowManager();
 	}
 }

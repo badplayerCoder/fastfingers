@@ -27,6 +27,7 @@ public class RemovedDialog extends JDialog {
 
 	/**
 	 * Create the dialog.
+	 * @param text	the word sent 
 	 */
 	public RemovedDialog(String text, WordGUI gui) {
 		setBounds(100, 100, 450, 200);

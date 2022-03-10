@@ -6,12 +6,16 @@ public class English {
 
 	private WordController wc;
 	
+	/**
+	 * 	Constructor for the English language package
+	 */
+	
 	public English() {
 		wc = new WordController();
 	}
 	
-	/*
-	 * 	DB language setup
+	/**
+	 * 	DB language setup*
 	 * 
 	 *	To add new words to the setup do it like this:
 	 *	wc.newWord("The word you want to add");
