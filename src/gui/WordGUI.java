@@ -43,22 +43,6 @@ public class WordGUI extends JFrame implements WordGUIIF {
 	private WordGUI wordgui;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					WordGUI frame = new WordGUI();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the frame.
 	 */
 	public WordGUI() {

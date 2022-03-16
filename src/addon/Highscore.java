@@ -28,8 +28,9 @@ public class Highscore implements HighscoreIF{
 		}
 	}
 
-	public ArrayList<Integer> getTop() {
+	public int getTop() {
 		ArrayList<Integer> top = new ArrayList<>();
+		int highest = 0;
 		
 		for (int i = 0; i < topScore.size(); i++) {
 			if(topScore.get(i) > top1) {
@@ -39,7 +40,9 @@ public class Highscore implements HighscoreIF{
 		
 		top.add(top1);
 		
-		return top;
+		highest = top.get(0);
+		
+		return highest;
 	}
 
 	

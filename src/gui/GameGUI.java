@@ -62,22 +62,6 @@ public class GameGUI extends JFrame {
 	private ScheduledExecutorService scheduler;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					GameGUI frame = new GameGUI();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the frame.
 	 * 
 	 * @throws FileNotFoundException
@@ -179,7 +163,7 @@ public class GameGUI extends JFrame {
 					if (startTime == 0) {
 						if (!open) {
 							open = true;
-							writeFile.writeHighScoreToFile(amount);
+							writeFile.writeHighScoreToFile(right);
 							windowManager.goResultDialog(amount, accuracy, right, wrong);
 							combineReset();
 							wholeHighscore();
@@ -256,10 +240,29 @@ public class GameGUI extends JFrame {
 		updateHighscore();
 	}
 
+	private int getIntHighscore() {
+		String current = null;
+		int ph = 0;
+		
+		current = lblBestWPM.getText();
+		ph = Integer.parseInt(current);
+		
+		return ph;
+	}
+	
+	private void checkHighscore() {
+		if(highScore.getTop() > getIntHighscore()){
+			lblHighscore.setText("NEW HIGHSCORE!");
+			updateHighscore();
+		}else {
+			lblHighscore.setText("HIGHSCORE");
+		}
+	}
+	
 	private void updateHighscore() {
-		String wpm = null;
-		wpm = highScore.getTop().toString() + " WPM";
-		lblBestWPM.setText(wpm);
+		String correct = null;
+		correct = highScore.getTop() + " Correct";
+		lblBestWPM.setText(correct);
 	}
 
 	/**

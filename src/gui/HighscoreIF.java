@@ -5,5 +5,5 @@ import java.util.ArrayList;
 
 public abstract interface HighscoreIF {
 	public void setHighscore() throws FileNotFoundException;
-	public ArrayList<Integer> getTop();
+	public int getTop();
 }

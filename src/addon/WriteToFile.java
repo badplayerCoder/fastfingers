@@ -83,12 +83,13 @@ public class WriteToFile {
 		}
 	}
 
-	public void writeHighScoreToFile(int wpm) {
+	public void writeHighScoreToFile(int correct) {
 		String currentPath = System.getProperty("user.home") + "/Fastfingers/";
 		try {
 			FileWriter writer = new FileWriter(currentPath + "highscore.txt", true);
-			writer.write("\n"+wpm);
+			writer.write("\n"+correct);
 			writer.close();
+			config.printText("Successfully wrote to the file.");
 		} catch (IOException e) {
 			config.printText("An error occurred.");
 		}
