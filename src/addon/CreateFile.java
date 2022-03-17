@@ -27,7 +27,6 @@ public class CreateFile {
 	
 	public void createWrongWordFile() {
 		String currentPath = System.getProperty("user.home") + "/Fastfingers";
-		//String pathFolder = currentPath + "/Fastfingers";
 		try {
 		      File myObj = new File(currentPath, "wrongwords.txt");
 		      if (myObj.createNewFile()) {

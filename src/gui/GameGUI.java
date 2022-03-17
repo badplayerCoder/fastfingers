@@ -130,7 +130,7 @@ public class GameGUI extends JFrame {
 
 		lblHighscore = new JLabel("HIGHSCORE");
 		lblHighscore.setHorizontalAlignment(SwingConstants.CENTER);
-		lblHighscore.setBounds(57, 125, 90, 23);
+		lblHighscore.setBounds(32, 126, 138, 23);
 		contentPane.add(lblHighscore);
 
 		lblBestWPM = new JLabel("");
@@ -213,7 +213,7 @@ public class GameGUI extends JFrame {
 
 		setupLabel();
 		setupScore();
-		wholeHighscore();
+		setupHighScore();
 	}
 
 	/**
@@ -230,35 +230,37 @@ public class GameGUI extends JFrame {
 	 * Updates highscore
 	 */
 
-	private void wholeHighscore() {
+	private void setupHighScore() {
 		try {
 			highScore.setHighscore();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		updateHighscore();
 	}
 
-	private int getIntHighscore() {
-		String current = null;
-		int ph = 0;
-		
-		current = lblBestWPM.getText();
-		ph = Integer.parseInt(current);
-		
-		return ph;
+	private void wholeHighscore() {
+		int current = highScore.getTop();
+		try {
+			highScore.setHighscore();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		checkHighscore(current);
 	}
-	
-	private void checkHighscore() {
-		if(highScore.getTop() > getIntHighscore()){
+
+	private void checkHighscore(int current) {
+
+		if (highScore.getTop() > current) {
 			lblHighscore.setText("NEW HIGHSCORE!");
 			updateHighscore();
-		}else {
+			System.out.println("IF");
+		} else {
 			lblHighscore.setText("HIGHSCORE");
+			System.out.println("Else");
 		}
 	}
-	
+
 	private void updateHighscore() {
 		String correct = null;
 		correct = highScore.getTop() + " Correct";
