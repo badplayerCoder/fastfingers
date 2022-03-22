@@ -80,6 +80,7 @@ public class GameGUI extends JFrame {
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_SPACE) {
 					gameTextFieldLogic();
+					doBackspace();
 					if (!started) {
 						startTimer();
 					}
@@ -250,7 +251,6 @@ public class GameGUI extends JFrame {
 	}
 
 	private void checkHighscore(int current) {
-
 		if (highScore.getTop() > current) {
 			lblHighscore.setText("NEW HIGHSCORE!");
 			updateHighscore();
@@ -311,8 +311,7 @@ public class GameGUI extends JFrame {
 		textField.setText(null);
 
 		// Uses robot to backspace in textfield to start at the beginning everytime
-		robot.keyPress(KeyEvent.VK_BACK_SPACE);
-		robot.keyRelease(KeyEvent.VK_BACK_SPACE);
+		doBackspace();
 	}
 
 	/**
@@ -329,8 +328,7 @@ public class GameGUI extends JFrame {
 			textField.setText(null);
 
 			// Uses robot to backspace in textfield to start at the beginning everytime
-			robot.keyPress(KeyEvent.VK_BACK_SPACE);
-			robot.keyRelease(KeyEvent.VK_BACK_SPACE);
+			doBackspace();
 
 			// Updates labels & score
 			updateLabel();
@@ -348,8 +346,7 @@ public class GameGUI extends JFrame {
 			textField.setText(null);
 
 			// Uses robot to backspace in textfield to start at the beginning everytime
-			robot.keyPress(KeyEvent.VK_BACK_SPACE);
-			robot.keyRelease(KeyEvent.VK_BACK_SPACE);
+			doBackspace();
 
 			// Updates labels & score
 			updateLabel();
@@ -357,6 +354,12 @@ public class GameGUI extends JFrame {
 		}
 	}
 
+	private void doBackspace() {
+		// Uses robot to backspace in textfield to start at the beginning everytime
+		robot.keyPress(KeyEvent.VK_BACK_SPACE);
+		robot.keyRelease(KeyEvent.VK_BACK_SPACE);
+	}
+	
 	/**
 	 * Updates words & what place the words are in the label
 	 */

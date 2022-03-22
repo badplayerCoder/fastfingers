@@ -12,9 +12,9 @@ import model.Word;
  * @author Lasse
  *
  */
-public class Config {
+public class Config implements ConfigIF{
 
-	public final boolean testing = false;
+	public boolean testing = false;
 	public final String author = "Lasse Haslund";
 	public final String version = "1.4";
 	public final LocalDateTime now = LocalDateTime.now();  
@@ -49,6 +49,14 @@ public class Config {
 		if(testing) {
 			System.out.println(text + file);
 		}
+	}
+	
+	public void testTRUE() {
+		testing = true;
+	}
+	
+	public void testFALSE() {
+		testing = false;
 	}
 	
 }

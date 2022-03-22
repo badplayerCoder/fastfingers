@@ -4,6 +4,8 @@ import java.io.IOException;
 
 public class OpenFile {
 
+	private String path = System.getProperty("user.home") + "/Fastfingers/";
+	
 	public void openLog() throws IOException {
 		//	Gets file & path for the folder dir
 		String file = "fastfingerlogs.txt";
@@ -15,15 +17,31 @@ public class OpenFile {
 		pb.start();
 	}
 	
-	public void openFolder() throws IOException {
-		//	Gets the path of the folder dir
-		String folder = System.getProperty("user.home") + "/Fastfingers/";
+	public void openWrong() throws IOException {
+		//	Gets file & path for the folder dir
+		String file = "wrongwords.txt";
 		
 		//	Creates ProcessBuilder.
 		ProcessBuilder pb = new ProcessBuilder();
-		pb.command("open", folder);
+		pb.command("open", path+file);
 		pb.start();
+	}
+	
+	public void openHighscore() throws IOException {
+		//	Gets file & path for the folder dir
+		String file = "highscore.txt";
 		
+		//	Creates ProcessBuilder.
+		ProcessBuilder pb = new ProcessBuilder();
+		pb.command("open", path+file);
+		pb.start();
+	}
+	
+	public void openFolder() throws IOException {
+		//	Creates ProcessBuilder.
+		ProcessBuilder pb = new ProcessBuilder();
+		pb.command("open", path);
+		pb.start();
 	}
 	
 }

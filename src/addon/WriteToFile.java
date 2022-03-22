@@ -6,12 +6,11 @@ import java.io.IOException;
 public class WriteToFile {
 
 	private Config config = new Config();
+	private String path = System.getProperty("user.home") + "/Fastfingers/";
 
 	public void writeInformationToFile(String text) {
-		String currentPath = System.getProperty("user.home");
-		String pathFolder = currentPath + "/Fastfingers/";
 		try {
-			FileWriter myWriter = new FileWriter(pathFolder + "fastfingerlogs.txt", true);
+			FileWriter myWriter = new FileWriter(path + "fastfingerlogs.txt", true);
 			myWriter.write("\n[" + text + "]");
 			myWriter.close();
 			config.printText("Successfully wrote to the file.");
@@ -25,10 +24,8 @@ public class WriteToFile {
 	 * Writes config information into fastfingerlogs file
 	 */
 	public void writeStringToFile(String text) {
-		String currentPath = System.getProperty("user.home");
-		String pathFolder = currentPath + "/Fastfingers/";
 		try {
-			FileWriter myWriter = new FileWriter(pathFolder + "fastfingerlogs.txt", true);
+			FileWriter myWriter = new FileWriter(path + "fastfingerlogs.txt", true);
 			myWriter.write("\n[Test] " + text);
 			myWriter.close();
 			config.printText("Successfully wrote to the file.");
@@ -42,10 +39,8 @@ public class WriteToFile {
 	 * Writes config integer into fastfingerlogs file
 	 */
 	public void writeIntegerToFile(int amount) {
-		String currentPath = System.getProperty("user.home");
-		String pathFolder = currentPath + "/Fastfingers/";
 		try {
-			FileWriter myWriter = new FileWriter(pathFolder + "fastfingerlogs.txt", true);
+			FileWriter myWriter = new FileWriter(path + "fastfingerlogs.txt", true);
 			myWriter.write("\n[Test] " + amount);
 			myWriter.close();
 			config.printText("Successfully wrote to the file.");
@@ -56,10 +51,8 @@ public class WriteToFile {
 	}
 
 	public void writeWrongWordToFile(String right, String text) {
-		String currentPath = System.getProperty("user.home");
-		String pathFolder = currentPath + "/Fastfingers/";
 		try {
-			FileWriter myWriter = new FileWriter(pathFolder + "wrongwords.txt", true);
+			FileWriter myWriter = new FileWriter(path + "wrongwords.txt", true);
 			myWriter.write("\n[" + right + "]" + text);
 			myWriter.close();
 			config.printText("Successfully wrote to the file.");
@@ -70,10 +63,8 @@ public class WriteToFile {
 	}
 
 	public void writeWordToFile(String text) {
-		String currentPath = System.getProperty("user.home");
-		String pathFolder = currentPath + "/Fastfingers/";
 		try {
-			FileWriter myWriter = new FileWriter(pathFolder + "fastfingerlogs.txt", true);
+			FileWriter myWriter = new FileWriter(path + "fastfingerlogs.txt", true);
 			myWriter.write("\n[Word] " + text);
 			myWriter.close();
 			config.printText("Successfully wrote to the file.");
@@ -84,9 +75,8 @@ public class WriteToFile {
 	}
 
 	public void writeHighScoreToFile(int correct) {
-		String currentPath = System.getProperty("user.home") + "/Fastfingers/";
 		try {
-			FileWriter writer = new FileWriter(currentPath + "highscore.txt", true);
+			FileWriter writer = new FileWriter(path + "highscore.txt", true);
 			writer.write("\n"+correct);
 			writer.close();
 			config.printText("Successfully wrote to the file.");
@@ -95,6 +85,33 @@ public class WriteToFile {
 		}
 	}
 
+	public void clearLogFile() {
+		try {
+			FileWriter writer = new FileWriter(path + "fastfingerlogs.txt");
+			writer.close();
+		}catch(IOException e) {
+			config.printText("An error occurred.");
+		}
+	}
+	
+	public void clearWrongFile() {
+		try {
+			FileWriter writer = new FileWriter(path + "wrongwords.txt");
+			writer.close();
+		}catch(IOException e) {
+			config.printText("An error occurred.");
+		}
+	}
+	
+	public void clearHighscoreFile() {
+		try {
+			FileWriter writer = new FileWriter(path + "highscore.txt");
+			writer.close();
+		}catch(IOException e) {
+			config.printText("An error occurred.");
+		}
+	}
+	
 	public void onClosed(String text) {
 		writeInformationToFile(text);
 	}

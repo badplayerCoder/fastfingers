@@ -14,10 +14,13 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 
+import addon.Commands;
 import addon.Config;
 import addon.CreateFile;
 import addon.Highscore;
 import addon.OpenFile;
+import addon.Terminal;
+import addon.TerminalIF;
 import addon.WriteToFile;
 import controller.WordController;
 import database.DBWord;
@@ -40,10 +43,14 @@ public class MainMenu extends JFrame {
 	private JTextField textField;
 	private JLabel lblLang;
 	private JLabel lblDisclaim;
+	private JLabel lblTerminalFeedback;
 
 	private CreateFile createFile;
 	private WriteToFile writeFile;
 	private OpenFile openFile;
+	private JTextField terminalBox;
+
+	private TerminalIF terminal;
 
 	/**
 	 * Launch the application.
@@ -72,6 +79,7 @@ public class MainMenu extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		setLocationRelativeTo(null);
+		setResizable(false);
 
 		JButton btnWord = new JButton("Word Menu");
 		btnWord.addMouseListener(new MouseAdapter() {
@@ -168,40 +176,57 @@ public class MainMenu extends JFrame {
 		lblNewLabel.setBounds(577, 291, 117, 16);
 		contentPane.add(lblNewLabel);
 
+		JLabel lblTerminal = new JLabel("Terminal");
+		lblTerminal.setHorizontalTextPosition(SwingConstants.CENTER);
+		lblTerminal.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTerminal.setBounds(435, 291, 147, 16);
+		contentPane.add(lblTerminal);
+
+		terminalBox = new JTextField();
+		terminalBox.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					String txt = null;
+					txt = terminalBox.getText().toLowerCase();
+					terminalExcute(txt);
+				}
+			}
+		});
+		terminalBox.setColumns(10);
+		terminalBox.setBounds(435, 306, 146, 31);
+		contentPane.add(terminalBox);
+
+		lblTerminalFeedback = new JLabel("");
+		lblTerminalFeedback.setHorizontalTextPosition(SwingConstants.CENTER);
+		lblTerminalFeedback.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTerminalFeedback.setBounds(436, 342, 147, 16);
+		contentPane.add(lblTerminalFeedback);
+
 		init();
 	}
 
 	/**
-	 * 	textFieldLogic check if the given data in the textField input is equals to some keyword in the system
+	 * textFieldLogic check if the given data in the textField input is equals to
+	 * some keyword in the system
 	 */
-	
+
 	private void textFieldLogic() {
 		String stext = textField.getText();
 
 		if (dbWord.pickLang(stext).equals(stext)) {
 			if (dbWord.pickLang(stext).equals("help") || dbWord.pickLang(stext).equals("info")) {
 
-				// Clears textfield
-				textField.setText(null);
+				clearBoxAndChangeLabel("Supported languages: danish & english");
 
-				// Uses robot to backspace in textfield to start at the beginning everytime
-				robot.keyPress(KeyEvent.VK_BACK_SPACE);
-				robot.keyRelease(KeyEvent.VK_BACK_SPACE);
-
-				lblLang.setText("Supported languages: danish & english");
-
+			} else if (dbWord.pickLang(stext).equals("empty") || dbWord.pickLang(stext).equals("drop")) {
+				clearBoxAndChangeLabel("The word database is now " + stext);
 			} else {
 				if (stext.equals("")) {
 					lblLang.setText("Textfield is empty! Do 'help' or 'info'!");
 				} else {
-					// Clears textfield
-					textField.setText(null);
-
-					// Uses robot to backspace in textfield to start at the beginning everytime
-					robot.keyPress(KeyEvent.VK_BACK_SPACE);
-					robot.keyRelease(KeyEvent.VK_BACK_SPACE);
-
-					lblLang.setText(stext + " has been activated with " + wordController.getAmountWords() + " different words");
+					clearBoxAndChangeLabel(
+							stext + " has been activated with " + wordController.getAmountWords() + " different words");
 				}
 			}
 		} else {
@@ -220,6 +245,7 @@ public class MainMenu extends JFrame {
 		createFile = new CreateFile();
 		writeFile = new WriteToFile();
 		openFile = new OpenFile();
+		terminal = new Terminal();
 		try {
 			robot = new Robot();
 			createFile.createLogFile();
@@ -230,12 +256,79 @@ public class MainMenu extends JFrame {
 		writeFile.onOpen("Main menu started");
 		writeFile.onOpen(addDisclaim());
 	}
-	
+
+	private void clearTerminal() {
+		// Clears textfield
+		terminalBox.setText(null);
+
+		// Uses robot to backspace in textfield to start at the beginning everytime
+		robot.keyPress(KeyEvent.VK_BACK_SPACE);
+		robot.keyRelease(KeyEvent.VK_BACK_SPACE);
+	}
+
+	private void clearBoxAndChangeLabel(String text) {
+		// Clears textfield
+		textField.setText(null);
+
+		// Uses robot to backspace in textfield to start at the beginning everytime
+		robot.keyPress(KeyEvent.VK_BACK_SPACE);
+		robot.keyRelease(KeyEvent.VK_BACK_SPACE);
+
+		String txt = null;
+		txt = "<html>" + text;
+
+		lblLang.setText(txt);
+	}
+
+	private void terminalExcute(String text) {
+		switch (text) {
+		case "clearlog":
+			terminal.excuteAction(Commands.CLEAR_LOG_FILE);
+			clearTerminal();
+			lblTerminalFeedback.setText("Cleared log file!");
+			break;
+		case "quit":
+			terminal.excuteAction(Commands.QUIT);
+			break;
+		case "clearwrong":
+			terminal.excuteAction(Commands.CLEAR_WRONG_FILE);
+			clearTerminal();
+			lblTerminalFeedback.setText("Cleared Wrong words file!");
+			break;
+		case "clearhighscore":
+			terminal.excuteAction(Commands.CLEAR_HIGHSCORE);
+			clearTerminal();
+			lblTerminalFeedback.setText("Cleared highscore file!");
+			break;
+		case "openhighscore":
+			terminal.excuteAction(Commands.OPEN_HIGHSCORE);
+			clearTerminal();
+			lblTerminalFeedback.setText("Opened highscore file!");
+			break;
+		case "openwrong":
+			terminal.excuteAction(Commands.OPEN_WRONG_FILE);
+			clearTerminal();
+			lblTerminalFeedback.setText("Opened wrong words file!");
+			break;
+		case "openfolder":
+			terminal.excuteAction(Commands.OPEN_FOLDER);
+			clearTerminal();
+			lblTerminalFeedback.setText("Opened folder");
+			break;
+		case "debugtrue":
+			terminal.excuteAction(Commands.DEBUGTRUE);
+			clearTerminal();
+			lblTerminalFeedback.setText("Debug mode = ON");
+			break;
+		}
+	}
+
 	/**
-	 * 	Adds disclaim to the main menu at startup
-	 * @return	formatDateTime as string to display the time when program is opened
+	 * Adds disclaim to the main menu at startup
+	 * 
+	 * @return formatDateTime as string to display the time when program is opened
 	 */
-	
+
 	private String addDisclaim() {
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 		String formatDateTime = config.now.format(format);
