@@ -22,6 +22,8 @@ import addon.OpenFile;
 import addon.Terminal;
 import addon.TerminalIF;
 import addon.WriteToFile;
+import controller.TerminalController;
+import controller.TerminalControllerIF;
 import controller.WordController;
 import database.DBWord;
 import javax.swing.JTextField;
@@ -50,7 +52,7 @@ public class MainMenu extends JFrame {
 	private OpenFile openFile;
 	private JTextField terminalBox;
 
-	private TerminalIF terminal;
+	private TerminalControllerIF terminalController;
 
 	/**
 	 * Launch the application.
@@ -81,6 +83,8 @@ public class MainMenu extends JFrame {
 		setLocationRelativeTo(null);
 		setResizable(false);
 
+		
+		
 		JButton btnWord = new JButton("Word Menu");
 		btnWord.addMouseListener(new MouseAdapter() {
 			@Override
@@ -189,7 +193,7 @@ public class MainMenu extends JFrame {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					String txt = null;
 					txt = terminalBox.getText().toLowerCase();
-					terminalExcute(txt);
+					terminalController.terminalExecute(txt);
 				}
 			}
 		});
@@ -245,7 +249,7 @@ public class MainMenu extends JFrame {
 		createFile = new CreateFile();
 		writeFile = new WriteToFile();
 		openFile = new OpenFile();
-		terminal = new Terminal();
+		terminalController = new TerminalController(this);
 		try {
 			robot = new Robot();
 			createFile.createLogFile();
@@ -257,7 +261,7 @@ public class MainMenu extends JFrame {
 		writeFile.onOpen(addDisclaim());
 	}
 
-	private void clearTerminal() {
+	public void clearTerminal() {
 		// Clears textfield
 		terminalBox.setText(null);
 
@@ -280,47 +284,8 @@ public class MainMenu extends JFrame {
 		lblLang.setText(txt);
 	}
 
-	private void terminalExcute(String text) {
-		switch (text) {
-		case "clearlog":
-			terminal.excuteAction(Commands.CLEAR_LOG_FILE);
-			clearTerminal();
-			lblTerminalFeedback.setText("Cleared log file!");
-			break;
-		case "quit":
-			terminal.excuteAction(Commands.QUIT);
-			break;
-		case "clearwrong":
-			terminal.excuteAction(Commands.CLEAR_WRONG_FILE);
-			clearTerminal();
-			lblTerminalFeedback.setText("Cleared Wrong words file!");
-			break;
-		case "clearhighscore":
-			terminal.excuteAction(Commands.CLEAR_HIGHSCORE);
-			clearTerminal();
-			lblTerminalFeedback.setText("Cleared highscore file!");
-			break;
-		case "openhighscore":
-			terminal.excuteAction(Commands.OPEN_HIGHSCORE);
-			clearTerminal();
-			lblTerminalFeedback.setText("Opened highscore file!");
-			break;
-		case "openwrong":
-			terminal.excuteAction(Commands.OPEN_WRONG_FILE);
-			clearTerminal();
-			lblTerminalFeedback.setText("Opened wrong words file!");
-			break;
-		case "openfolder":
-			terminal.excuteAction(Commands.OPEN_FOLDER);
-			clearTerminal();
-			lblTerminalFeedback.setText("Opened folder");
-			break;
-		case "debugtrue":
-			terminal.excuteAction(Commands.DEBUGTRUE);
-			clearTerminal();
-			lblTerminalFeedback.setText("Debug mode = ON");
-			break;
-		}
+	public void changeTerminalFeedback(String text) {
+		lblTerminalFeedback.setText(text);
 	}
 
 	/**

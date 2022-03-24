@@ -2,20 +2,24 @@ package addon;
 
 import java.io.IOException;
 
-public class Terminal implements TerminalIF {
+import gui.WindowManager;
+
+public class Terminal {
 
 	
 	private WriteToFile write;
 	private OpenFile open;
 	private ConfigIF cfg;
+	private WindowManager windowManager;
 
 	public Terminal() {
 		write = new WriteToFile();
 		open = new OpenFile();
 		cfg = new Config();
+		windowManager = new WindowManager();
 	}
 
-	public void excuteAction(Commands cmd) {
+	public void executeAction(Commands cmd) {
 		switch (cmd) {
 		case CLEAR_LOG_FILE:
 			write.clearLogFile();
@@ -51,6 +55,19 @@ public class Terminal implements TerminalIF {
 			break;
 		case DEBUGTRUE:
 			cfg.testTRUE();
+			break;
+		case OPEN_LOG_FILE:
+			try {
+				open.openLog();
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+			break;
+		case COMMANDS:
+			windowManager.goCommandDialog();
+			break;
+		case CMD:
+			windowManager.goCommandDialog();
 			break;
 		}
 	}

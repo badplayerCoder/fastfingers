@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import javax.swing.JFrame;
 
 import addon.Placeholder;
+import dialog.CommandDialog;
 import dialog.ExistDialog;
 import dialog.MainMenuDialog;
 import dialog.RemovedDialog;
@@ -79,6 +80,13 @@ public class WindowManager {
 		rd.setLocationRelativeTo(null);
 		rd.setResizable(false);
 		rd.setVisible(true);
+	}
+	
+	public void goCommandDialog() {
+		CommandDialog cd = new CommandDialog();
+		cd.setLocationRelativeTo(null);
+		cd.setResizable(false);
+		cd.setVisible(true);
 	}
 	
 }
