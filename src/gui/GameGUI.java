@@ -54,7 +54,7 @@ public class GameGUI extends JFrame {
 	private HighscoreIF highScore;
 
 	// Game variable
-	private int startTime = 60; // Default as 60
+	private int startTime = 10; // Default as 60
 	private boolean started = false; // Default as false
 	private boolean open = false; // Default as false
 	private JLabel lblTimer; // Holds the label for timer to be updated
@@ -80,7 +80,6 @@ public class GameGUI extends JFrame {
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_SPACE) {
 					gameTextFieldLogic();
-					doBackspace();
 					if (!started) {
 						startTimer();
 					}
@@ -129,14 +128,15 @@ public class GameGUI extends JFrame {
 		lblTimer.setBounds(445, 224, 61, 16);
 		contentPane.add(lblTimer);
 
-		lblHighscore = new JLabel("HIGHSCORE");
+		lblHighscore = new JLabel("Top 5 Highscores");
 		lblHighscore.setHorizontalAlignment(SwingConstants.CENTER);
 		lblHighscore.setBounds(32, 126, 138, 23);
 		contentPane.add(lblHighscore);
 
 		lblBestWPM = new JLabel("");
+		lblBestWPM.setVerticalAlignment(SwingConstants.TOP);
 		lblBestWPM.setHorizontalAlignment(SwingConstants.CENTER);
-		lblBestWPM.setBounds(57, 149, 90, 23);
+		lblBestWPM.setBounds(42, 149, 115, 175);
 		contentPane.add(lblBestWPM);
 		setLocationRelativeTo(null);
 
@@ -167,7 +167,7 @@ public class GameGUI extends JFrame {
 							writeFile.writeHighScoreToFile(right);
 							windowManager.goResultDialog(amount, accuracy, right, wrong);
 							combineReset();
-							wholeHighscore();
+							wholeHighscore(right);
 							config.printInt(startTime);
 							scheduler.shutdown();
 						}
@@ -238,32 +238,28 @@ public class GameGUI extends JFrame {
 			e.printStackTrace();
 		}
 		updateHighscore();
+
 	}
 
-	private void wholeHighscore() {
-		int current = highScore.getTop();
-		try {
-			highScore.setHighscore();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		checkHighscore(current);
+	private void wholeHighscore(int amount) {
+		setupHighScore();
+		checkHighscore(amount);
 	}
 
-	private void checkHighscore(int current) {
-		if (highScore.getTop() > current) {
+	private void checkHighscore(int amount) {
+		//FIXME highscore to top5
+		if (highScore.checkIfHigher(amount)) {
 			lblHighscore.setText("NEW HIGHSCORE!");
-			updateHighscore();
-			System.out.println("IF");
 		} else {
-			lblHighscore.setText("HIGHSCORE");
-			System.out.println("Else");
+			lblHighscore.setText("Top 5 Highscores");
 		}
 	}
 
 	private void updateHighscore() {
-		String correct = null;
-		correct = highScore.getTop() + " Correct";
+		String correct = "<html>";
+		for (int i : highScore.getTop5()) {
+			correct += i + "  Correct<br>";
+		}
 		lblBestWPM.setText(correct);
 	}
 
@@ -300,6 +296,7 @@ public class GameGUI extends JFrame {
 		clearTextField();
 		resetScore();
 		updateTimer();
+
 	}
 
 	/**
@@ -309,7 +306,6 @@ public class GameGUI extends JFrame {
 	private void clearTextField() {
 		// Clears textfield
 		textField.setText(null);
-
 		// Uses robot to backspace in textfield to start at the beginning everytime
 		doBackspace();
 	}
@@ -321,37 +317,25 @@ public class GameGUI extends JFrame {
 
 	private void gameTextFieldLogic() {
 		if (gameController.checkTextBox(textField.getText())) {
-			// Moves words to new row
-			gameController.moveTextToNewRow();
-
-			// Clears textfield
-			textField.setText(null);
-
-			// Uses robot to backspace in textfield to start at the beginning everytime
-			doBackspace();
-
-			// Updates labels & score
-			updateLabel();
-			setupScore();
-
+			textLogic();
 		} else {
 			String text = textField.getText();
 			String right = gameController.getFirst();
 			writeFile.writeWrongWordToFile(right, text);
 
-			// Moves words to new row
-			gameController.moveTextToNewRow();
-
-			// Clears textfield
-			textField.setText(null);
-
-			// Uses robot to backspace in textfield to start at the beginning everytime
-			doBackspace();
-
-			// Updates labels & score
-			updateLabel();
-			setupScore();
+			textLogic();
 		}
+	}
+
+	private void textLogic() {
+		// Moves words to new row
+		gameController.moveTextToNewRow();
+
+		clearTextField();
+
+		// Updates labels & score
+		updateLabel();
+		setupScore();
 	}
 
 	private void doBackspace() {
@@ -359,7 +343,7 @@ public class GameGUI extends JFrame {
 		robot.keyPress(KeyEvent.VK_BACK_SPACE);
 		robot.keyRelease(KeyEvent.VK_BACK_SPACE);
 	}
-	
+
 	/**
 	 * Updates words & what place the words are in the label
 	 */

@@ -11,6 +11,8 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class MainMenuDialog extends JDialog {
 
@@ -52,17 +54,33 @@ public class MainMenuDialog extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton okButton = new JButton("OK");
+				okButton.addKeyListener(new KeyAdapter() {
+					@Override
+					public void keyPressed(KeyEvent e) {
+						disposeClientByKey(e);
+					}
+				});
 				okButton.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mousePressed(MouseEvent e) {
-						setVisible(false);
-						dispose();
+						disposeClient();
 					}
 				});
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
 			}
+		}
+	}
+	
+	private void disposeClient() {
+		setVisible(false);
+		dispose();
+	}
+	
+	private void disposeClientByKey(KeyEvent e) {
+		if(e.getKeyCode() == KeyEvent.VK_SPACE || e.getKeyCode() == KeyEvent.VK_ENTER) {
+			disposeClient();
 		}
 	}
 }

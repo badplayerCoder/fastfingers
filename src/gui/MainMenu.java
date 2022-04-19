@@ -11,16 +11,10 @@ import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 
-import addon.Commands;
 import addon.Config;
 import addon.CreateFile;
-import addon.Highscore;
-import addon.OpenFile;
-import addon.Terminal;
-import addon.TerminalIF;
 import addon.WriteToFile;
 import controller.TerminalController;
 import controller.TerminalControllerIF;
@@ -49,7 +43,6 @@ public class MainMenu extends JFrame {
 
 	private CreateFile createFile;
 	private WriteToFile writeFile;
-	private OpenFile openFile;
 	private JTextField terminalBox;
 
 	private TerminalControllerIF terminalController;
@@ -144,46 +137,10 @@ public class MainMenu extends JFrame {
 		lblDisclaim.setBounds(6, 350, 418, 16);
 		contentPane.add(lblDisclaim);
 
-		JButton btnFolder = new JButton("Open folder");
-		btnFolder.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// Methods to open fastfingers folder at user.home
-				try {
-					openFile.openFolder();
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-			}
-		});
-		btnFolder.setBounds(577, 337, 117, 29);
-		contentPane.add(btnFolder);
-
-		JButton btnLogTxt = new JButton("Open logs file");
-		btnLogTxt.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// Methods to open fastfingers logs at user.home
-				try {
-					openFile.openLog();
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-			}
-		});
-		btnLogTxt.setBounds(577, 308, 117, 29);
-		contentPane.add(btnLogTxt);
-
-		JLabel lblNewLabel = new JLabel("Debug");
-		lblNewLabel.setHorizontalTextPosition(SwingConstants.CENTER);
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(577, 291, 117, 16);
-		contentPane.add(lblNewLabel);
-
 		JLabel lblTerminal = new JLabel("Terminal");
 		lblTerminal.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblTerminal.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTerminal.setBounds(435, 291, 147, 16);
+		lblTerminal.setBounds(547, 321, 147, 16);
 		contentPane.add(lblTerminal);
 
 		terminalBox = new JTextField();
@@ -198,13 +155,13 @@ public class MainMenu extends JFrame {
 			}
 		});
 		terminalBox.setColumns(10);
-		terminalBox.setBounds(435, 306, 146, 31);
+		terminalBox.setBounds(548, 335, 146, 31);
 		contentPane.add(terminalBox);
 
 		lblTerminalFeedback = new JLabel("");
 		lblTerminalFeedback.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblTerminalFeedback.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTerminalFeedback.setBounds(436, 342, 147, 16);
+		lblTerminalFeedback.setBounds(547, 293, 147, 16);
 		contentPane.add(lblTerminalFeedback);
 
 		init();
@@ -248,7 +205,6 @@ public class MainMenu extends JFrame {
 		config = new Config();
 		createFile = new CreateFile();
 		writeFile = new WriteToFile();
-		openFile = new OpenFile();
 		terminalController = new TerminalController(this);
 		try {
 			robot = new Robot();
