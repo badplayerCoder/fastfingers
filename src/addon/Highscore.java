@@ -34,7 +34,7 @@ public class Highscore implements HighscoreIF {
 
 	public List<Integer> getTop5() {
 		List<Integer> ph = new ArrayList<>();
-		List<Integer> res = new ArrayList<>(); // FIXME
+		List<Integer> res = new ArrayList<>();
 		
 		for (int i = 0; i < topScore.size(); i++) {
 			ph.add(topScore.get(i));

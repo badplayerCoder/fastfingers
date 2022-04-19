@@ -247,7 +247,6 @@ public class GameGUI extends JFrame {
 	}
 
 	private void checkHighscore(int amount) {
-		//FIXME highscore to top5
 		if (highScore.checkIfHigher(amount)) {
 			lblHighscore.setText("NEW HIGHSCORE!");
 		} else {
