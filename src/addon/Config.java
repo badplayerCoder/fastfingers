@@ -16,7 +16,7 @@ public class Config implements ConfigIF{
 
 	public boolean testing = false;
 	public final String author = "Lasse Haslund";
-	public final String version = "2.0";
+	public final String version = "2.0.1";
 	public final LocalDateTime now = LocalDateTime.now();  
 	
 	//private WriteToFile writeFile = new WriteToFile();
