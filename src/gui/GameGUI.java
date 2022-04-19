@@ -54,7 +54,7 @@ public class GameGUI extends JFrame {
 	private HighscoreIF highScore;
 
 	// Game variable
-	private int startTime = 10; // Default as 60
+	private int startTime = 60; // Default as 60
 	private boolean started = false; // Default as false
 	private boolean open = false; // Default as false
 	private JLabel lblTimer; // Holds the label for timer to be updated
